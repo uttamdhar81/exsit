@@ -1,0 +1,71 @@
+<?php
+/**
+ * @Package     : Exsit
+ * @Version     : 1.0.0
+ * @Author      : Uicobe
+ * @Author URI  : https://themeforest.net/user/aonecolor
+ */
+
+
+// Block direct access
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Include File
+ *
+ */
+
+// Constants
+require_once get_parent_theme_file_path() . '/inc/exsit-constants.php';
+
+//theme setup
+require_once EXSIT_DIR_PATH_INC . 'theme-setup.php';
+
+//essential scripts
+require_once EXSIT_DIR_PATH_INC . 'essential-scripts.php';
+
+// sidebar register
+require_once EXSIT_DIR_PATH_INC . 'widgets-registration.php';
+
+//essential functions
+require_once EXSIT_DIR_PATH_INC . 'helpers.php';
+
+//customcss functions
+require_once EXSIT_DIR_PATH_INC . 'exsit-customcss.php';
+
+// helper function
+require_once EXSIT_DIR_PATH_INC . 'wp-html-helper.php';
+
+// hooks
+require_once EXSIT_DIR_PATH_HOOKS . 'hooks.php';
+
+// hooks funtion
+require_once EXSIT_DIR_PATH_HOOKS . 'hooks-functions.php';
+
+
+// hooks funtion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
