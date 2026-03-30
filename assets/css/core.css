@@ -737,7 +737,9 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     visibility: visible;
     opacity: 1;
 }
-
+.menu-close {
+    display: none;
+}
 
 
 @media screen and (max-width: 991px) {
