@@ -756,7 +756,16 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
 .menu-close {
     display: none;
 }
-
+.accordion-bg-white .e-n-accordion-item {
+        background: #fff;
+    border-radius: 8px;
+    border: 1px var(--gray-200) solid;
+    box-shadow: 0 2px 18px rgba(18, 7, 143, .0392156863), 0 1px 2px rgba(14, 9, 72, .0784313725), 0 0 0 1px rgba(14, 9, 72, .0392156863), inset 0 0 3px rgba(19, 39, 108, .0392156863), inset 0 -4px 1px rgba(19, 39, 109, .0588235294);
+}
+.accordion-faq .e-n-accordion-item-title {
+    display: flex;
+    justify-content: space-between;
+}
 
 @media screen and (max-width: 991px) {
     .d-none-lg {
