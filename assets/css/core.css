@@ -755,6 +755,8 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
 }
 .menu-close {
     display: none;
+    border: 0;
+    outline: none;
 }
 .mobile-menu-trigger {display: none;}
 
