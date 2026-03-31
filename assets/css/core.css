@@ -766,7 +766,13 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     display: flex;
     justify-content: space-between;
 }
-
+@media screen and (max-width: 1024px) {
+    .menu-container {
+        position: fixed !important;
+        top:0;
+        z-index: 1;
+    }
+}
 @media screen and (max-width: 991px) {
     .d-none-lg {
         display: none !important;
@@ -774,11 +780,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     .site .admin-bar .header-wrapper {
         top: 32px !important;
     }
-    .menu-container {
-        position: fixed !important;
-        top:0;
-        z-index: 1;
-    }
+    
     .menu-block {
         padding: 16px;
         overflow-y: visible !important;
