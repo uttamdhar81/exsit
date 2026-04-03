@@ -68,10 +68,10 @@
         ------------------------------------------------------------*/
         $(".mobile-menu-trigger").on("click", function (e) {
             e.preventDefault();
-            $(".menu-block, .menu-overlay").addClass("active");
+            $(".menu-block, .menu-overlay, .menu-close").addClass("active");
         });
         $(".menu-close, .menu-overlay").on("click", function () {
-            $(".menu-block, .menu-overlay").removeClass("active");
+            $(".menu-block, .menu-overlay, .menu-close").removeClass("active");
         });
 
         /*----------------------------------------------------------

@@ -598,7 +598,7 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
 
         // Post Excerpt (Subtitle)
         if (has_excerpt()) {
-            echo '<p class="text-gray-700 fw-400 mb-0" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">';
+            echo '<p class="text-gray-700 fw-400 mb-0 fs-16" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">';
             echo esc_html(get_the_excerpt());
             echo '</p>';
         }
@@ -607,7 +607,7 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
 
         // Featured Image (Full width under hero text)
         if (has_post_thumbnail()) {
-            echo '<div class="col-lg-12 mt-3" data-aos="fade-up" data-aos-duration="400" data-delay="00">';
+            echo '<div class="col-lg-10 mt-3" data-aos="fade-up" data-aos-duration="400" data-delay="00">';
             the_post_thumbnail('full', array(
                 'class' => 'object-fit-cover w-100 rounded-4',
                 'loading' => 'eager',
