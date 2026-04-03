@@ -552,9 +552,9 @@ if (!function_exists('exsit_blog_details_wrapper_start_cb')) {
         echo '<div class="container">';
 
         if (is_active_sidebar('blog-sidebar')) {
-            $exsit_gutter_class = 'g-5'; // 
+            $exsit_gutter_class = 'maxw-1200 mx-auto'; // 
         } else {
-            $exsit_gutter_class = '';
+            $exsit_gutter_class = 'maxw-1100 mx-auto';
         }
 
         echo '<div class="row justify-content-center g-5' . esc_attr($exsit_gutter_class) . '">';
@@ -607,7 +607,7 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
 
         // Featured Image (Full width under hero text)
         if (has_post_thumbnail()) {
-            echo '<div class="col-lg-10 mt-3" data-aos="fade-up" data-aos-duration="400" data-delay="00">';
+            echo '<div class="col-lg-12 mt-0" data-aos="fade-up" data-aos-duration="400" data-delay="00">';
             the_post_thumbnail('full', array(
                 'class' => 'object-fit-cover w-100 rounded-4',
                 'loading' => 'eager',
