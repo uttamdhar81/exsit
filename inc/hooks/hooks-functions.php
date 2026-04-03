@@ -557,7 +557,7 @@ if (!function_exists('exsit_blog_details_wrapper_start_cb')) {
             $exsit_gutter_class = 'maxw-1100 mx-auto';
         }
 
-        echo '<div class="row justify-content-center g-5' . esc_attr($exsit_gutter_class) . '">';
+        echo '<div class="row justify-content-center g-5 ' . esc_attr($exsit_gutter_class) . '">';
     }
 }
 
