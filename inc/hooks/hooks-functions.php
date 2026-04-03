@@ -552,9 +552,9 @@ if (!function_exists('exsit_blog_details_wrapper_start_cb')) {
         echo '<div class="container">';
 
         if (is_active_sidebar('blog-sidebar')) {
-            $exsit_gutter_class = 'maxw-1200 mx-auto'; // 
+            $exsit_gutter_class = 'maxw-1100 mx-auto'; // 
         } else {
-            $exsit_gutter_class = 'maxw-1100 mx-auto';
+            $exsit_gutter_class = 'maxw-1200 mx-auto';
         }
 
         echo '<div class="row justify-content-center g-5 ' . esc_attr($exsit_gutter_class) . '">';
