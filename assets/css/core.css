@@ -437,9 +437,15 @@ body {
 .widget .wp-block-group a,
 .widget .wp-block-group .wp-block-latest-posts__post-title {
     font-size: clamp(1rem, .9625rem + .139vw, 1.17px);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--gray-900);
-    line-height: 1.2;
+    line-height: 26px;
+}
+.widget ul li a {
+    font-size: clamp(1rem, .9625rem + .139vw, 1.17px);
+    font-weight: 500;
+    color: var(--gray-900);
+    line-height: 26px;
 }
 .widget .wp-block-group .wp-block-latest-comments__comment-meta a {
     color: var(--gray-900);
