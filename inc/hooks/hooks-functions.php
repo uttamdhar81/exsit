@@ -621,33 +621,86 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
 }
 
 
+function exsit_get_blog_layout() {
+    // 1. Check post meta
+    $meta = get_post_meta(get_the_ID(), '_exsit_blog_layout', true);
+
+    if (in_array($meta, ['left', 'right', 'none'], true)) {
+        return $meta;
+    }
+    // 2. CSF fallback
+    if (class_exists('CSF')) {
+        $opt = exsit_opt('exsit_blog_single_sidebar');
+
+        if ($opt == '2') return 'left';
+        if ($opt == '3') return 'right';
+        if ($opt == '1') return 'none';
+    }
+
+    // 3. Final fallback → NO SIDEBAR
+    return 'none';
+}
+
 // Blog details column wrapper start hook function
 if (!function_exists('exsit_blog_details_col_start_cb')) {
     function exsit_blog_details_col_start_cb()
     {
+        // 1. Get post meta
+        $meta = get_post_meta(get_the_ID(), '_exsit_blog_layout', true);
 
+        // 2. Get CSF option safely
         $blogtab = exsit_opt('exsit_blog_setting');
+        $csf_layout = '';
 
         if (class_exists('CSF') && !empty($blogtab) && is_array($blogtab)) {
+            $csf_layout = isset($blogtab['exsit_blog_single_sidebar']) 
+                ? $blogtab['exsit_blog_single_sidebar'] 
+                : '';
+        }
 
-            $exsit_blog_single_sidebar = $blogtab['exsit_blog_single_sidebar'];
+        echo '<div class="row pt-5 justify-content-center">';
 
-            if ($exsit_blog_single_sidebar == '2' && is_active_sidebar('exsit-blog-sidebar')) {
-                echo '<div class="row pt-5 justify-content-center"><div class="col-lg-8 order-lg-last">';
+        // =========================
+        // PRIORITY 1: POST META
+        // =========================
+        if (in_array($meta, ['left', 'right', 'none'], true)) {
 
-            } elseif ($exsit_blog_single_sidebar == '3' && is_active_sidebar('exsit-blog-sidebar')) {
-                echo '<div class="row pt-5 justify-content-center"><div class="col-lg-8">';
-
+            if ($meta === 'left' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-8 order-lg-last">';
+            } elseif ($meta === 'right' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-8">';
             } else {
-                echo '<div class="row pt-5 justify-content-center"><div class="col-lg-8">';
+                echo '<div class="col-lg-12">';
             }
 
+            return;
+        }
+
+        // =========================
+        // PRIORITY 2: CSF OPTION
+        // =========================
+        if (!empty($csf_layout)) {
+
+            if ($csf_layout == '2' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-8 order-lg-last">';
+            } elseif ($csf_layout == '3' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-8">';
+            } elseif ($csf_layout == '1') {
+                echo '<div class="col-lg-12">';
+            } else {
+                echo '<div class="col-lg-8">';
+            }
+
+            return;
+        }
+
+        // =========================
+        // PRIORITY 3: SIDEBAR CHECK
+        // =========================
+        if (is_active_sidebar('exsit-blog-sidebar')) {
+            echo '<div class="col-lg-8">';
         } else {
-            if (is_active_sidebar('exsit-blog-sidebar')) {
-                echo '<div class="row pt-5 justify-content-center"><div class="col-lg-8">';
-            } else {
-                echo '<div class="row pt-5 justify-content-center"><div class="col-lg-12">';
-            }
+            echo '<div class="col-lg-12">';
         }
     }
 }
@@ -664,18 +717,59 @@ if (!function_exists('exsit_blog_details_col_end_cb')) {
 if (!function_exists('exsit_blog_details_sidebar_cb')) {
     function exsit_blog_details_sidebar_cb()
     {
+        // 1. Get post meta
+        $meta = get_post_meta(get_the_ID(), '_exsit_blog_layout', true);
 
-        if (class_exists('CSF')) {
-            $exsit_blog_single_sidebar = exsit_opt('exsit_blog_single_sidebar');
-        } else {
-            $exsit_blog_single_sidebar = 4; // default: sidebar enabled
+        // 2. Get CSF option safely
+        $blogtab = exsit_opt('exsit_blog_setting');
+        $csf_layout = '';
+
+        if (class_exists('CSF') && !empty($blogtab) && is_array($blogtab)) {
+            $csf_layout = isset($blogtab['exsit_blog_single_sidebar']) 
+                ? $blogtab['exsit_blog_single_sidebar'] 
+                : '';
         }
 
-        if ($exsit_blog_single_sidebar != 1) {
-            // Sidebar
-            get_sidebar('blog'); // or use get_sidebar();
-            echo '</div>'; // .col 
+        // =========================
+        // PRIORITY 1: POST META
+        // =========================
+        if (in_array($meta, ['left', 'right', 'none'], true)) {
+
+            if ($meta !== 'none' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-4">';
+                get_sidebar('blog');
+                echo '</div>';
+            }
+
+            echo '</div>'; // close .row
+            return;
         }
+
+        // =========================
+        // PRIORITY 2: CSF OPTION
+        // =========================
+        if (!empty($csf_layout)) {
+
+            if ($csf_layout != '1' && is_active_sidebar('exsit-blog-sidebar')) {
+                echo '<div class="col-lg-4">';
+                get_sidebar('blog');
+                echo '</div>';
+            }
+
+            echo '</div>'; // close .row
+            return;
+        }
+
+        // =========================
+        // PRIORITY 3: FALLBACK
+        // =========================
+        if (is_active_sidebar('exsit-blog-sidebar')) {
+            echo '<div class="col-lg-4">';
+            get_sidebar('blog');
+            echo '</div>';
+        }
+
+        echo '</div>'; // close .row
     }
 }
 
@@ -1000,5 +1094,35 @@ if (!function_exists('exsit_page_content_cb')) {
                 comments_template();
             }
         }
+    }
+}
+
+function exsit_add_blog_layout_meta_box() {
+    add_meta_box(
+        'exsit_blog_layout',
+        'Blog Layout',
+        'exsit_blog_layout_meta_callback',
+        'post', // or your CPT slug
+        'side',
+        'high'
+    );
+}
+
+
+function exsit_blog_layout_meta_callback($post) {
+    $value = get_post_meta($post->ID, '_exsit_blog_layout', true);
+    ?>
+    <select name="exsit_blog_layout" style="width:100%;">
+        <option value="">Default (Theme Option)</option>
+        <option value="left" <?php selected($value, 'left'); ?>>Left Sidebar</option>
+        <option value="right" <?php selected($value, 'right'); ?>>Right Sidebar</option>
+        <option value="none" <?php selected($value, 'none'); ?>>No Sidebar</option>
+    </select>
+    <?php
+}
+
+function exsit_save_blog_layout_meta($post_id) {
+    if (isset($_POST['exsit_blog_layout'])) {
+        update_post_meta($post_id, '_exsit_blog_layout', sanitize_text_field($_POST['exsit_blog_layout']));
     }
 }

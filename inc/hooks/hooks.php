@@ -82,3 +82,8 @@ add_action( 'exsit_page_end_wrap', 'exsit_page_end_wrap_cb', 10 );
 
 add_action( 'exsit_back_to_top', 'exsit_back_to_top_cb', 10 );
 add_action( 'exsit_footer_content', 'exsit_footer_content_cb', 10 );
+
+// Add Meta Box Layout Selector for Single Blog Post
+
+add_action('add_meta_boxes', 'exsit_add_blog_layout_meta_box');
+add_action('save_post', 'exsit_save_blog_layout_meta');
