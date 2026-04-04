@@ -47,12 +47,12 @@ $aria_req = ( $req ? "required" : '' );
 
 $fields = array(
     'author' =>
-        '<div class="col-md-6 form-group">
+        '<div class="col-md-6 form-group mt-3">
             <input class="form-control" type="text" name="author" placeholder="'. esc_attr__( 'Your Name *', 'exsit' ) .'" value="'. esc_attr( $commenter['comment_author'] ) .'" '. $aria_req .'>
         </div>',
 
     'email'  =>
-        '<div class="col-md-6 form-group">
+        '<div class="col-md-6 form-group mt-3">
             <input class="form-control" type="email" name="email" placeholder="'. esc_attr__( 'Your Email *', 'exsit' ) .'" value="'. esc_attr( $commenter['comment_author_email'] ) .'" '. $aria_req .'>
         </div>',
 );
