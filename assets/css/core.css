@@ -325,6 +325,7 @@ body {
 .comment-notes {
     display: flex;
     align-items: center;
+    margin-bottom: 16px;
 }
 .comment-notes span {
     font-size: 14px;
