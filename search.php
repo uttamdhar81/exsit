@@ -66,7 +66,7 @@ do_action( 'exsit_blog_col_end_wrap' );
  *
  * @Hooked exsit_blog_sidebar_cb 10
  */
-do_action( 'exsit_blog_sidebar' );
+do_action( 'exsit_page_sidebar' );
 
 /**
  * Hook for Blog End Wrapper

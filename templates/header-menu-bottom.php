@@ -19,7 +19,7 @@ if ( is_page_template( 'template-builder.php' ) || is_single() || is_404() ) {
 }
 
 
-
+echo '<!-- PAGETITLE WRAPPER  -->';
 echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
     echo '<div class="container py-100">';
         echo '<div class="row justify-content-center">';
@@ -56,6 +56,8 @@ echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
                     echo '<span class="text-gray-800 fw-500">';
                         if ( is_home() ) {
                             echo esc_html__( 'Blog', 'exsit' );
+                        } elseif ( is_search() ) {
+                            echo esc_html( get_search_query() );                            
                         } elseif ( is_archive() ) {
                             single_cat_title();
                         } else {
@@ -69,3 +71,4 @@ echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
         echo '</div>';
     echo '</div>';
 echo '</div>';
+echo '<!-- PAGETITLE WRAPPER  -->';

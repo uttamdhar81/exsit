@@ -447,6 +447,23 @@ body {
     color: var(--gray-900);
     line-height: 26px;
 }
+.widget article footer {
+    font-size: 14px !important;
+    font-weight: 500;
+    color: var(--gray-700);
+    line-height: 26px;
+    text-decoration: none !important;
+}
+
+.widget article footer a,
+.widget article footer time ,
+.widget article p {
+    font-size: 14px !important;
+    font-weight: 500;
+    color: var(--gray-900);
+    line-height: 26px;
+    text-decoration: none !important;
+}
 .widget .wp-block-group .wp-block-latest-comments__comment-meta a {
     color: var(--gray-900);
     transition: .4s;
@@ -580,6 +597,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 /* Lists */
@@ -651,7 +669,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     object-fit: cover;
 }
 .post-article .post-content .post-title {
-    font-size: clamp(1.625rem, 1.475rem + .417vw, 2rem);
+    font-size: clamp(1.625rem, 1.475rem + .417vw, 1.7rem);
 }
 
 .article-style-two .post-article {

@@ -958,6 +958,7 @@ if (!function_exists('exsit_blog_details_related_post_cb')) {
 if (!function_exists('exsit_page_start_wrap_cb')) {
     function exsit_page_start_wrap_cb()
     {
+        echo '<!-- MAIN WRAPPER  -->';
         echo '<section class="page-section pb-100">';
         echo '<div class="container">';
         echo '<div class="row g-5">';
@@ -984,7 +985,7 @@ if (!function_exists('exsit_page_col_start_wrap_cb')) {
 
             } else {
                 // No Sidebar / Full Width
-                echo '<div class="col-lg-12">';
+                echo '<div class="col-lg-12 boot">';
             }
 
         } else {
