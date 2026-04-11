@@ -15,7 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 
+
 do_action('exsit_page_title');
+
+
+do_action( 'exsit_main_wrapper_start' );
 /**
  * Hook for Blog Start Wrapper
  *
@@ -24,6 +28,8 @@ do_action('exsit_page_title');
  * @Hooked exsit_blog_start_wrap_cb 10
  */
 do_action( 'exsit_blog_start_wrap' );
+
+
 
 /**
  * Hook for Blog Column Start Wrapper
@@ -35,7 +41,7 @@ do_action( 'exsit_blog_start_wrap' );
 do_action( 'exsit_blog_col_start_wrap' );
 
 /**
- * Hook for Blog Content (Search Results)
+ * Hook for Blog Content
  *
  * Hook exsit_blog_content
  *
@@ -52,6 +58,7 @@ do_action( 'exsit_blog_content' );
  */
 do_action( 'exsit_blog_pagination' );
 
+
 /**
  * Hook for Blog Column End Wrapper
  *
@@ -60,6 +67,8 @@ do_action( 'exsit_blog_pagination' );
  * @Hooked exsit_blog_col_end_wrap_cb 10
  */
 do_action( 'exsit_blog_col_end_wrap' );
+
+
 
 /**
  * Hook for Blog Sidebar
@@ -78,6 +87,13 @@ do_action( 'exsit_page_sidebar' );
  * @Hooked exsit_blog_end_wrap_cb 10
  */
 do_action( 'exsit_blog_end_wrap' );
+
+
+
+
+
+
+do_action( 'exsit_main_wrapper_end' );
 
 // Footer
 get_footer();

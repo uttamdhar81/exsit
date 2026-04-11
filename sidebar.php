@@ -2,7 +2,10 @@
 /**
  * @Package     : Exsit
  * @Version     : 1.0.0
+ * @Author      : Uicobe
+ * @Author URI  : https://themeforest.net/user/aonecolor
  */
+
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;

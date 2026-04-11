@@ -36,7 +36,6 @@ function exsit_widgets_init() {
     ) );
 
     // WooCommerce Sidebar (add later when shop is supported)
-    /*
     if ( class_exists( 'WooCommerce' ) ) {
         register_sidebar( array(
             'name'          => esc_html__( 'WooCommerce Sidebar', 'exsit' ),
@@ -48,6 +47,5 @@ function exsit_widgets_init() {
             'after_title'   => '</h4>',
         ) );
     }
-    */
 }
 add_action( 'widgets_init', 'exsit_widgets_init' );

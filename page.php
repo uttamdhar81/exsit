@@ -15,6 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Header
 get_header();
 
+
+do_action('exsit_page_title');
 /**
  *
  * Hook for Page Start Wrapper

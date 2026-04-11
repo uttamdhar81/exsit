@@ -523,11 +523,12 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     color: var(--gray-900);
 }
 /* Post Content Typography */
+.page-content,
 .post-content,
 .entry-content {
     font-size: 16px;
     line-height: 1.75;
-    color: #1f2933; /* readable dark gray */
+    color: var(--gray-900);
 }
 .entry-content .strong,.entry-content b,.entry-content strong,
 .post-content .strong,.post-content b,.post-content strong {
@@ -535,6 +536,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     color: var(--gray-900);
 }
 /* Headings */
+.page-content h1,
 .post-content h1,
 .entry-content h1 {
     font-size: 2.25rem; /* 36px */
@@ -543,22 +545,25 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     font-weight: 700;
 }
 
+.page-content h2,
 .post-content h2,
 .entry-content h2 {
     font-size: 1.6rem; /* 30px */
     line-height: 1.25;
-    margin: 0rem 0 .35rem;
+    margin: 0rem 0 .5rem;
     font-weight: 600;
 }
 
+.page-content h3,
 .post-content h3,
 .entry-content h3 {
     font-size: 1.4rem; /* 24px */
     line-height: 1.3;
-    margin: 1.0rem 0 0.25rem;
+    margin: 1.0rem 0 0.3rem;
     font-weight: 600;
 }
 
+.page-content h3,
 .post-content h4,
 .entry-content h4 {
     font-size: 1.25rem; /* 20px */
@@ -567,6 +572,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     font-weight: 600;
 }
 
+.page-content h5,
 .post-content h5,
 .entry-content h5 {
     font-size: 1.125rem; /* 18px */
@@ -575,6 +581,7 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
     font-weight: 600;
 }
 
+.page-content h6,
 .post-content h6,
 .entry-content h6 {
     font-size: 1rem; /* 16px */

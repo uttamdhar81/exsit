@@ -40,6 +40,7 @@ if (!function_exists('exsit_preloader_wrap')) {
 if (!function_exists('exsit_header_cb')) {
     function exsit_header_cb()
     {
+        echo '<!-- HEADER  -->';
         get_template_part('templates/header');
         get_template_part('templates/header-menu-bottom');
     }
@@ -87,6 +88,7 @@ if (!function_exists('exsit_back_to_top_cb')) {
         <?php
     }
 }
+
 
 // Blog Start Wrapper Function
 if (!function_exists('exsit_blog_start_wrap_cb')) {
@@ -1126,4 +1128,84 @@ function exsit_save_blog_layout_meta($post_id) {
     if (isset($_POST['exsit_blog_layout'])) {
         update_post_meta($post_id, '_exsit_blog_layout', sanitize_text_field($_POST['exsit_blog_layout']));
     }
+}
+
+function exsit_page_title_cb() {
+
+    echo '<!-- PAGETITLE WRAPPER  -->';
+    echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
+        echo '<div class="container py-100">';
+            echo '<div class="row justify-content-center">';
+                echo '<div class="col-lg-7 text-center justify-content-center">';
+
+                    // ===== TITLE =====
+                    echo '<h1 class="display6-size text-gray-900 fw-700 mb-lg-2 mb-13 lh-5">';
+
+                    if ( is_search() ) {
+
+                        echo esc_html__('Search result', 'exsit');
+
+                    } elseif ( is_archive() ) {
+
+                        echo wp_kses_post( get_the_archive_title() );
+
+                    } elseif ( is_404() ) {
+
+                        echo esc_html__('Page Not Found', 'exsit');
+
+                    } else {
+
+                        echo esc_html( get_the_title() );
+                    }
+
+                    echo '</h1>';
+
+                    // ===== BREADCRUMB =====
+                    echo '<p class="d-flex align-items-center justify-content-center gap-2 mt-3 mb-0">';
+
+                        // Home
+                        echo '<span class="text-gray-800 fw-500">';
+                            echo '<a href="' . esc_url( home_url('/') ) . '" class="text-gray-800">';
+                                echo esc_html__('Home', 'exsit');
+                            echo '</a>';
+                        echo '</span>';
+
+                        // Arrow
+                        echo '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">';
+                            echo '<polyline points="9 18 15 12 9 6"></polyline>';
+                        echo '</svg>';
+
+                        // Second item
+                        echo '<span class="text-gray-800 fw-500">';
+
+                        if ( is_search() ) {
+
+                            echo esc_html( get_search_query() );
+
+                        } elseif ( is_category() || is_tag() ) {
+
+                            echo single_term_title('', false); 
+
+                        } elseif ( is_archive() ) {
+
+                            echo get_the_archive_title();
+
+                        } elseif ( is_404() ) {
+
+                            echo esc_html__('404', 'exsit');
+
+                        } else {
+
+                            echo esc_html( get_the_title() );
+                        }
+
+                        echo '</span>';
+
+                    echo '</p>';
+
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';  
+    echo '</div>';
+    echo '<!-- END PAGETITLE WRAPPER  -->';
 }
