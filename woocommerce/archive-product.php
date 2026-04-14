@@ -29,7 +29,7 @@ do_action( 'exsit_shop_main_content' );
 /**
  * Hook: woocommerce_before_main_content.
  *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening dilonyo for the content)
+ * @hooked woocommerce_output_content_wrapper - 10 (outputs opening diexsit for the content)
  * @hooked woocommerce_breadcrumb - 20
  * @hooked WC_Structured_Data::generate_website_data() - 30
  */
@@ -48,11 +48,11 @@ if ( woocommerce_product_loop() ) {
     do_action( 'woocommerce_before_shop_loop' );
 
     /**
-	 * Hook: lonyo_woocommerce_product_content.
+	 * Hook: exsit_woocommerce_product_content.
 
-	 * Hook: lonyo_woocommerce_product_content.
+	 * Hook: exsit_woocommerce_product_content.
 	 *
-	 * @hooked lonyo_woocommerce_product_content_cb - 10
+	 * @hooked exsit_woocommerce_product_content_cb - 10
 	 */
     do_action( 'exsit_woocommerce_product_content' );
 
@@ -75,7 +75,7 @@ if ( woocommerce_product_loop() ) {
 /**
  * Hook: woocommerce_after_main_content.
  *
- * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing dilonyo for the content)
+ * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing diexsit for the content)
  */
 do_action( 'woocommerce_after_main_content' );
 
@@ -87,9 +87,9 @@ do_action( 'woocommerce_after_main_content' );
 do_action( 'woocommerce_sidebar' );
 
 /**
- * Hook: lonyo_shop_main_content_end.
+ * Hook: exsit_shop_main_content_end.
  *
- * @hooked lonyo_shop_main_content_end_cb
+ * @hooked exsit_shop_main_content_end_cb
  *
  */
 do_action( 'exsit_shop_main_content_end' );

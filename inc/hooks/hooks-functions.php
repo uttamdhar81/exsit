@@ -971,6 +971,11 @@ if (!function_exists('exsit_page_start_wrap_cb')) {
 if (!function_exists('exsit_page_col_start_wrap_cb')) {
     function exsit_page_col_start_wrap_cb()
     {
+        // 🚀 Disable sidebar for WooCommerce core pages
+        if (function_exists('is_cart') && (is_cart() || is_checkout() || is_account_page())) {
+            echo '<div class="col-lg-12 woocommerce-full">';
+            return;
+        }
 
         // If Codestar Framework exists
         if (class_exists('CSF') && function_exists('exsit_opt')) {
@@ -991,7 +996,7 @@ if (!function_exists('exsit_page_col_start_wrap_cb')) {
             }
 
         } else {
-            // Fallback if CSF or exsit_opt() not available
+            // Fallback
             if (is_active_sidebar('exsit-page-sidebar')) {
                 echo '<div class="col-lg-8">';
             } else {
@@ -1015,6 +1020,10 @@ if (!function_exists('exsit_page_col_end_wrap_cb')) {
 if (!function_exists('exsit_page_sidebar_cb')) {
     function exsit_page_sidebar_cb()
     {
+        //  Disable sidebar for WooCommerce pages
+        if (function_exists('is_cart') && (is_cart() || is_checkout() || is_account_page())) {
+            return;
+        }
 
         // Default options
         $page_sidebar_layout = '3'; // right sidebar
@@ -1043,12 +1052,12 @@ if (!function_exists('exsit_page_sidebar_cb')) {
         // Decide which widget area to use
         $sidebar_id = ($page_sidebar_type == '2') ? 'exsit-blog-sidebar' : 'exsit-page-sidebar';
 
-        // If selected sidebar has no widgets, do nothing
+        // If no widgets → skip
         if (!is_active_sidebar($sidebar_id)) {
             return;
         }
 
-        // Output sidebar column
+        // Output sidebar
         echo '<div class="col-lg-4">';
         echo '<div class="sidebar-area sticky-sidebar" role="complementary" aria-label="Page Sidebar">';
         dynamic_sidebar($sidebar_id);
@@ -1074,7 +1083,7 @@ if (!function_exists('exsit_page_content_cb')) {
     if (!function_exists('exsit_page_content_cb')) {
         function exsit_page_content_cb()
         {
-
+            echo '<!-- PAGE CONTENT -->';
             // WooCommerce-aware wrapper
             if (class_exists('woocommerce') && (is_woocommerce() || is_cart() || is_checkout() || is_account_page())) {
                 echo '<div class="woocommerce--content">';
@@ -1145,9 +1154,32 @@ function exsit_page_title_cb() {
 
                         echo esc_html__('Search result', 'exsit');
 
+                    } elseif ( function_exists('is_shop') && is_shop() ) {
+
+                        echo '<span>' . esc_html( get_the_title( wc_get_page_id('shop') ) ) . '</span>';
+
+                    } elseif ( is_category() ) {
+
+                        echo '<span>Category : ' . esc_html( single_term_title('', false) ) . '</span>';
+
+                    } elseif ( is_tag() ) {
+
+                        echo '<span>Tag : ' . esc_html( single_term_title('', false) ) . '</span>';
+
+                    } elseif ( is_product_tag() ) {
+
+                        echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
+
+                    } elseif ( is_product_category() ) {
+
+                        echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
+
                     } elseif ( is_archive() ) {
 
-                        echo wp_kses_post( get_the_archive_title() );
+                        $title = get_the_archive_title();
+                        $title = preg_replace('/^\w+:\s/', '', $title);
+
+                        echo '<span>' . esc_html( $title ) . '</span>';
 
                     } elseif ( is_404() ) {
 
@@ -1182,13 +1214,24 @@ function exsit_page_title_cb() {
 
                             echo esc_html( get_search_query() );
 
+                        } elseif ( function_exists('is_shop') && is_shop() ) {
+
+                            echo esc_html( get_the_title( wc_get_page_id('shop') ) );
+
                         } elseif ( is_category() || is_tag() ) {
 
-                            echo single_term_title('', false); 
+                            echo esc_html( single_term_title('', false) );
+
+                        } elseif ( is_product_category() || is_product_tag() ) {
+
+                            echo esc_html( single_term_title('', false) );
 
                         } elseif ( is_archive() ) {
 
-                            echo get_the_archive_title();
+                            $title = get_the_archive_title();
+                            $title = preg_replace('/^\w+:\s/', '', $title);
+
+                            echo esc_html( $title );
 
                         } elseif ( is_404() ) {
 
