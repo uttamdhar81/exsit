@@ -89,3 +89,6 @@ add_action('add_meta_boxes', 'exsit_add_blog_layout_meta_box');
 add_action('save_post', 'exsit_save_blog_layout_meta');
 
 add_action('exsit_page_title', 'exsit_page_title_cb', 10);
+
+add_action('add_meta_boxes', 'exsit_add_product_layout_meta_box');
+add_action('save_post', 'exsit_save_product_layout_meta');

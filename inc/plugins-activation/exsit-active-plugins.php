@@ -60,18 +60,18 @@ function exsit_register_required_plugins() {
             'version'   => '',
             'required'  => true,
         ),
-        // array(
-        //     'name'      => esc_html__( 'MetForm', 'exsit' ),
-        //     'slug'      => 'metform',
-        //     'version'   => '',
-        //     'required'  => true,
-        // ),
-        // array(
-        //     'name'      => esc_html__( 'WooCommerce', 'exsit' ),
-        //     'slug'      => 'woocommerce',
-        //     'version'   => '',
-        //     'required'  => true,
-        // ),
+        array(
+            'name'      => esc_html__( 'MetForm', 'exsit' ),
+            'slug'      => 'metform',
+            'version'   => '',
+            'required'  => true,
+        ),
+        array(
+            'name'      => esc_html__( 'WooCommerce', 'exsit' ),
+            'slug'      => 'woocommerce',
+            'version'   => '',
+            'required'  => true,
+        ),
 
     );
 

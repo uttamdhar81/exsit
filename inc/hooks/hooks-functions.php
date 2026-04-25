@@ -1139,6 +1139,40 @@ function exsit_save_blog_layout_meta($post_id) {
     }
 }
 
+
+function exsit_add_product_layout_meta_box() {
+    add_meta_box(
+        'exsit_product_layout',
+        'Product Layout',
+        'exsit_product_layout_meta_callback',
+        'product', // ✅ product post type
+        'side',
+        'high'
+    );
+}
+
+function exsit_product_layout_meta_callback($post) {
+    $value = get_post_meta($post->ID, '_exsit_product_layout', true);
+    ?>
+    <select name="exsit_product_layout" style="width:100%;">
+        <option value="">Default (Theme Option)</option>
+        <option value="layout1" <?php selected($value, 'layout1'); ?>>Layout 1</option>
+        <option value="layout2" <?php selected($value, 'layout2'); ?>>Layout 2</option>
+        <option value="layout3" <?php selected($value, 'layout3'); ?>>Layout 3</option>
+    </select>
+    <?php
+}
+
+function exsit_save_product_layout_meta($post_id) {
+    if (isset($_POST['exsit_product_layout'])) {
+        update_post_meta(
+            $post_id,
+            '_exsit_product_layout',
+            sanitize_text_field($_POST['exsit_product_layout'])
+        );
+    }
+}
+
 function exsit_page_title_cb() {
 
     echo '<!-- PAGETITLE WRAPPER  -->';

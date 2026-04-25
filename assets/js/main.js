@@ -104,6 +104,22 @@
             $(".sub-menu").removeClass("show");
             $mega.toggleClass("show");
         });
+        
+        // CART QUANTITY
+        $(".qty-btn").on("click", function () {
+            var $button = $(this);
+            var $input = $button.siblings("input");
+            var oldValue = parseFloat($input.val()) || 0;
+            var newVal;
+
+            if ($button.hasClass("quantity-plus")) {
+                newVal = oldValue + 1;
+            } else if ($button.hasClass("quantity-minus")) {
+                newVal = Math.max(oldValue - 1, 0); // prevent going below 0
+            }
+
+            $input.val(newVal);
+        });
 
         /*----------------------------------------------------------
             06. SCROLL TO TOP (ARROW)

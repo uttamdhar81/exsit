@@ -30,12 +30,28 @@ if ( post_password_required() ) {
 	echo get_the_password_form(); // WPCS: XSS ok.
 	return;
 }
+
+$layout = get_post_meta(get_the_ID(), '_exsit_product_layout', true);
+
+// default fallback
+if (empty($layout)) {
+    $layout = 'layout1';
+}
+
+$img_class = 'product-details-img product-img';
+
+if ($layout === 'layout2') {
+    $img_class .= ' product-img-horizontal';
+} elseif ($layout === 'layout3') {
+	$img_class .= ' product-img-vertical';
+}
+
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( array( '', 'single-product-content' ), $product ); ?>>
 	<?php
-	echo '<div class="row gx-60">';
+	echo '<div class="row gx-5">';
 		echo '<div class="col-lg-6">';
-			echo '<div class="product-details-img product-img">';
+			echo '<div class="'.esc_attr($img_class).'">';
 				/**
 				 * Hook: woocommerce_before_single_product_summary.
 				 *

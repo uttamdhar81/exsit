@@ -33,7 +33,7 @@ if( !function_exists('exsit_shop_main_content_end_cb') ) {
 if( !function_exists('exsit_single_shop_main_content_cb') ) {
     function exsit_single_shop_main_content_cb() {
         echo "<!--SINGLE SHOP CONTENT-->";
-        echo '<div class="single-product-wrap pt-100 pb-100">';
+        echo '<div class="single-product-wrap">';
         echo '<div class="container">';
         echo '<div class="row gx-5">';
     }
@@ -80,7 +80,7 @@ if( !function_exists('exsit_shop_col_start_cb') ) {
                 $exsit_woo_shoppage_sidebar = is_array($wctab) && isset($wctab['exsit_woo_shoppage_sidebar']) ? $wctab['exsit_woo_shoppage_sidebar'] : '';
 
                 if( $exsit_woo_shoppage_sidebar == '2' && is_active_sidebar('exsit-woo-sidebar') ) {
-                    echo '<div class="col-lg-8 order-lg-last">';
+                    echo '<div class="col-lg-8 order-last">';
                 } elseif( $exsit_woo_shoppage_sidebar == '3' && is_active_sidebar('exsit-woo-sidebar') ) {
                     echo '<div class="col-lg-8">';
                 } else {
@@ -136,7 +136,7 @@ if( ! function_exists('exsit_woocommerce_filter_wrapper') ) {
     function exsit_woocommerce_filter_wrapper() {
 
         echo '<div class="sort-bar pb-3 border-bottom border-gray-200 mb-3">';
-            echo '<div class="row justify-content-between align-items-center">';
+            echo '<div class="row justify-content-between align-items-center gy-3">';
 
                 echo '<div class="col-md-6 col-12">';
                     echo '<p class="woocommerce-result-count">'.woocommerce_result_count().'</p>';
@@ -447,3 +447,197 @@ if( !function_exists('exsit_minicart_checkout_button') ) {
     }
 }
 
+
+
+
+// single product price rating hook function
+if( !function_exists('exsit_woocommerce_single_product_price_rating') ) {
+    function exsit_woocommerce_single_product_price_rating() {
+        echo '<!-- Product Prices -->';
+        woocommerce_template_single_price();
+        echo '<p class="text-gray-700 fs-14 mb-0 fst-italic">( MRP inclusive all taxes )</p>';
+        echo '<!-- End Product Price -->';
+    }
+}
+
+if( !function_exists('exsit_woocommerce_single_product_title') ) {
+    function exsit_woocommerce_single_product_title() {
+
+        echo '<!-- Product Title -->';
+        echo '<h1 class="product-title display5-size text-gray-900 fw-500 mb-0">'.esc_html( get_the_title() ).'</h1>';
+        echo '<!-- End Product Title -->';
+
+        global $product;
+
+        $average_rating = $product->get_average_rating();
+        $review_count   = $product->get_review_count();
+
+        echo '<div class="product-rating">';
+
+        if ( $review_count > 0 ) {
+
+            // ⭐ Stars HTML (Woo default stars)
+            echo wc_get_rating_html( $average_rating );
+
+            // ⭐ Rating number (4.5/5)
+            echo '<span class="rating-number fw-500">' . esc_html( $average_rating ) . '/5</span>';
+
+        } else {
+            echo '<span>No reviews yet</span>';
+        }
+
+        echo '</div>';
+    }
+}
+
+// single product title hook function
+if( !function_exists('exsit_woocommerce_quickview_single_product_title') ) {
+    function exsit_woocommerce_quickview_single_product_title( ) {
+        echo '<!-- Product Title -->';
+        echo '<h2 class="product-title">'.esc_html( get_the_title() ).'</h2>';
+        echo '<!-- End Product Title -->';
+    }
+}
+if( !function_exists('exsit_woocommerce_single_product_breadcrumb') ) {
+    function exsit_woocommerce_single_product_breadcrumb() {
+        echo '<div class="product-breadcrumb">';
+        woocommerce_breadcrumb();
+        echo '</div>';
+    }
+}
+
+// single product excerpt hook function
+if( !function_exists('exsit_woocommerce_single_product_excerpt') ) {
+    function exsit_woocommerce_single_product_excerpt() {
+        global $post;
+
+        if ( ! empty($post->post_excerpt) ) {
+
+            // Remove Elementor content completely
+            $clean_excerpt = wp_strip_all_tags($post->post_excerpt);
+
+            echo '<!-- Product Excerpt -->';
+            echo '<div class="woocommerce-product-details__short-description">';
+            echo wpautop($clean_excerpt);
+            echo '</div>';
+            echo '<!-- Product Excerpt -->';
+        }
+    }
+}
+
+// single product availability hook function
+if( !function_exists('exsit_woocommerce_single_product_availability') ) {
+    function exsit_woocommerce_single_product_availability( ) {
+        global $product;
+        $availability = $product->get_availability();
+
+        if( class_exists( 'CSF' ) ){
+            $wctab = exsit_opt('exsit_wc_settings');
+            $exsit_stock_quantity = $wctab['exsit_woo_stock_quantity_show_hide'];
+        }else{
+            $exsit_stock_quantity = 1;
+        }
+
+        if( $exsit_stock_quantity ){
+            if( $availability['class'] != 'out-of-stock' ) {
+                echo '<!-- Product Availability -->';
+                    echo '<div class="product-stock">';
+                        echo '<p>';
+                            if( $product->get_stock_quantity() ){
+                                echo '<span class="stock in-stock">'.esc_html( $product->get_stock_quantity() ).'</span>';
+                            }else{
+                                echo '<span class="stock in-stock">'.esc_html__( 'In Stock', 'exsit' ).'</span>';
+                            }
+                        echo '</p>';
+                    echo '</div>';
+                echo '<!--End Product Availability -->';
+            } else {
+                echo '<!-- Product Availability -->';
+                echo '<div class="product-stock">';
+                    echo '<p>';
+                        echo '<span class="stock out-of-stock">'.esc_html__( 'Out Of Stock', 'exsit' ).'</span>';
+                    echo '</p>';
+                echo '</div>';
+                echo '<!--End Product Availability -->';
+            }
+        }
+    }
+}
+
+// single product add to cart fuunction
+if( !function_exists('exsit_woocommerce_single_add_to_cart_button') ) {
+    function exsit_woocommerce_single_add_to_cart_button( ) {
+        echo '<div class="product-add-to-cart">';
+        echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">'.esc_html__( 'Choose quantity:', 'exsit' ).'</p>';
+        woocommerce_template_single_add_to_cart();
+        echo '</div>';
+    }
+}
+
+// single product meta hook function
+if( !function_exists('exsit_woocommerce_single_meta') ) {
+    function exsit_woocommerce_single_meta( ) {
+        global $product;
+        echo '<div class="product_meta">';
+            echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">'.esc_html__( 'Quick info', 'exsit' ).'</p>';
+            if( ! empty( $product->get_sku() ) ){
+                echo '<span class="sku_wrapper">'.esc_html__( 'SKU: ', 'exsit' ).'<span class="sku">' .$product->get_sku().'</span></span>';
+            }
+            echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="posted_in">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'exsit' ) . ' ', '</span>' );
+            // Add the "Tags" section here
+            $product_tags = get_the_terms( $product->get_id(), 'product_tag' );
+            if ( $product_tags && ! is_wp_error( $product_tags ) ) {
+                echo '<span>' . esc_html__( 'Tags:', 'exsit' ) . ' ';
+                $tag_links = array();
+                foreach ( $product_tags as $tag ) {
+                    $tag_links[] = '<a href="' . get_term_link( $tag ) . '" rel="tag">' . esc_html( $tag->name ) . '</a>';
+                }
+                echo implode( ', ', $tag_links );
+                echo '</span>';
+            }
+        echo '</div>';
+    }
+}
+
+if( !function_exists('exsit_woocommerce_single_delivaryoption') ) {
+    function exsit_woocommerce_single_delivaryoption( ) {
+        // Implementation for delivery option hook
+        echo '<div class="product-delivery-option mt-3">';
+            echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">'.esc_html__( 'Delivery Options:', 'exsit' ).'</p>';
+            echo '<ul class="delivery-options-list">';
+                echo '<li>'.esc_html__( 'Standard Delivery: 3-5 business days', 'exsit' ).'</li>';
+                echo '<li>'.esc_html__( 'Express Delivery: 1-2 business days', 'exsit' ).'</li>';
+                echo '<li>'.esc_html__( 'Free Shipping on orders over $50', 'exsit' ).'</li>';
+            echo '</ul>';
+        echo '</div>';
+    }
+}
+
+if( !function_exists('exsit_woocommerce_single_payment_options') ) {
+    function exsit_woocommerce_single_payment_options( ) {
+        // Implementation for payment options hook
+        echo '<div class="product-payment-options mt-3">';
+            echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">'.esc_html__( 'Payment Options:', 'exsit' ).'</p>';
+            echo '<img src="' . esc_url( get_template_directory_uri() . '/assets/img/payment-1.png' ) . '" alt="' . esc_attr__( 'Payment Options', 'exsit' ) . '" class="payment-options-image">';
+        echo '</div>';
+    }
+}
+
+if( !function_exists('exsit_woocommerce_cross_sell_display') ) {
+    function exsit_woocommerce_cross_sell_display( ){
+        woocommerce_cross_sell_display();
+    }
+}
+
+if( !function_exists('exsit_login_form_wrapper_start') ) {
+    function exsit_login_form_wrapper_start() {
+        echo '<div class="woocommerce-register-wrapper">';
+    }
+}
+
+
+if( !function_exists('exsit_login_form_wrapper_end') ) {
+    function exsit_login_form_wrapper_end() {
+        echo '</div>';
+    }
+}
