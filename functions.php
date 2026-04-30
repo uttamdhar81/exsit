@@ -12,10 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/**
- * Include File
- *
- */
+
 
 // Constants
 require_once get_parent_theme_file_path() . '/inc/exsit-constants.php';
