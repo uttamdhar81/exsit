@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Include File
+ * Main functions file which contains all the functions and features of the theme. It also includes all the necessary files for the theme to function properly.
  *
  */
 
