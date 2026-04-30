@@ -37,6 +37,9 @@ if (!defined('ABSPATH')) {
             'before' => '<div class="page-links">' . esc_html__('Pages:', 'exsit'),
             'after' => '</div>',
         ));
+
+        do_action('exsit_blog_details_tags');
+        
         ?>
 
     </div><!-- .blog-content -->

@@ -25,7 +25,7 @@ if ( $max_value && $min_value === $max_value ) {
 	<?php
 } else {
 	/* translators: %s: Quantity. */
-	$label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'lonyo' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'lonyo' );
+	$label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'exsit' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'exsit' );
 	?>
 		<?php do_action( 'woocommerce_before_quantity_input_field' ); ?>
         <div class="quantity-box">
@@ -40,7 +40,7 @@ if ( $max_value && $min_value === $max_value ) {
                 max="<?php echo esc_attr( 0 < $max_value ? $max_value : '' ); ?>"
                 name="<?php echo esc_attr( $input_name ); ?>"
                 value="<?php echo esc_attr( $input_value ); ?>"
-                title="<?php echo esc_attr_x( 'Qty', 'Product quantity input tooltip', 'lonyo' ); ?>"
+                title="<?php echo esc_attr_x( 'Qty', 'Product quantity input tooltip', 'exsit' ); ?>"
                 size="4"
                 inputmode="<?php echo esc_attr( $inputmode ); ?>" />
             <button type="button" class="quantity-plus qty-btn"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>

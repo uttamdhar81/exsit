@@ -21,40 +21,41 @@ if ( ! function_exists( 'exsit_opt' ) ) {
 if ( ! function_exists( 'exsit_theme_logo' ) ) {
     function exsit_theme_logo() {
 
-        $site_url = home_url( '/' );
+        $site_url  = home_url( '/' );
+        $site_name = get_bloginfo( 'name' );
+        $alt       = esc_attr( $site_name ? $site_name : 'Logo' );
 
-        // 1. WordPress Custom Logo (highest priority)
+        // 1. WordPress Custom Logo
         if ( has_custom_logo() ) {
             $custom_logo_id = get_theme_mod( 'custom_logo' );
             $logo_url       = wp_get_attachment_image_url( $custom_logo_id, 'full' );
 
             if ( $logo_url ) {
                 return '<a class="navbar-brand light-logo logo position-relative" href="' . esc_url( $site_url ) . '">
-                            <img src="' . esc_url( $logo_url ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" class="logo_light" width="156" height="50" loading="eager">
+                            <img src="' . esc_url( $logo_url ) . '" alt="' . $alt . '" class="logo_light" width="156" height="50" loading="eager">
                         </a>';
             }
         }
 
-        // 2. Theme Option Logos ( dark + white logo switch)
+        // 2. Theme Option Logos
         if ( class_exists( 'CSF' ) && function_exists( 'exsit_opt' ) ) {
 
             $dark_logo  = exsit_opt( 'exsit_dark_logo' );
             $white_logo = exsit_opt( 'exsit_white_logo' );
             $header     = exsit_opt( 'exsit_header_settings' );
 
-            // Image logos (output both for JS/CSS switch)
-            if ( ! empty( $dark_logo['url'] ) || ! empty( $white_logo['url'] ) ) {
+            $light_src = !empty($dark_logo['url'])  ? esc_url($dark_logo['url'])  : '';
+            $dark_src  = !empty($white_logo['url']) ? esc_url($white_logo['url']) : '';
 
-                $light_src = ! empty( $dark_logo['url'] )  ? $dark_logo['url']  : '';
-                $dark_src  = ! empty( $white_logo['url'] ) ? $white_logo['url'] : '';
+            if ( $light_src || $dark_src ) {
 
                 return '<a class="navbar-brand light-logo logo position-relative" href="' . esc_url( $site_url ) . '">
-                            ' . ( $light_src ? '<img src="' . esc_url( $light_src ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" class="logo_light img-fluid">' : '' ) . '
-                            ' . ( $dark_src  ? '<img src="' . esc_url( $dark_src )  . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" class="logo_dark img-fluid">'  : '' ) . '
+                            ' . ( $light_src ? '<img src="' . $light_src . '" alt="' . $alt . '" class="logo_light img-fluid">' : '' ) . '
+                            ' . ( $dark_src  ? '<img src="' . $dark_src  . '" alt="' . $alt . '" class="logo_dark img-fluid">'  : '' ) . '
                         </a>';
             }
 
-            // 2.1 Text logo from theme options
+            // Text logo
             if ( ! empty( $header['exsit_text_title'] ) ) {
                 return '<h1 class="navbar-brand light-logo logo position-relative display4-size mb-0 fw-700">
                             <a class="text-gray-900" href="' . esc_url( $site_url ) . '">' .
@@ -64,9 +65,9 @@ if ( ! function_exists( 'exsit_theme_logo' ) ) {
             }
         }
 
-        // 3. Final fallback: Site title
+        // 3. Fallback
         return '<a class="navbar-brand light-logo logo position-relative" href="' . esc_url( $site_url ) . '">
-                    <span class="site-title">' . esc_html( get_bloginfo( 'name' ) ) . '</span>
+                    <span class="site-title">' . esc_html( $site_name ) . '</span>
                 </a>';
     }
 }
@@ -145,8 +146,14 @@ function exsit_blog_date_permalink() {
  * Audio format iframe match
  */
 function exsit_iframe_match() {
+
     $audio_content = exsit_embedded_media( array( 'audio', 'iframe' ) );
-    return (bool) preg_match( '/<iframe\b/i', $audio_content );
+
+    if ( empty( $audio_content ) || ! is_string( $audio_content ) ) {
+        return false;
+    }
+
+    return (bool) preg_match( '/<iframe\b/i', wp_kses_post( $audio_content ) );
 }
 
 /**

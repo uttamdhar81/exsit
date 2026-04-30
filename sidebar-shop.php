@@ -11,12 +11,12 @@ if( ! defined( 'ABSPATH' ) ){
     exit( );
 }
 /**
-* @Packge 	   : Lonyo
-* @Version     : 1.0
-* @Author     : Mthemeus
-* @Author URI : https://mthemeus.com/
-*
-*/
+ * @Package     : Exsit
+ * @Version     : 1.0.0
+ * @Author      : Uicobe
+ * @Author URI  : https://themeforest.net/user/aonecolor
+ */
+
 
 if( ! is_active_sidebar( 'exsit-woo-sidebar' ) ){
     return;

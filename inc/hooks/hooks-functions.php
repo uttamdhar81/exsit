@@ -201,7 +201,7 @@ if (!function_exists('exsit_blog_content_cb')) {
     {
 
         // Defaults
-        $blog_style = 'blog_style_one';
+        $blog_style   = 'blog_style_one';
         $blog_sidebar = '3'; // default with sidebar
 
         // Fetch blog options
@@ -219,16 +219,10 @@ if (!function_exists('exsit_blog_content_cb')) {
             }
         }
 
-        // Wrapper + item classes
-        $wrapper_open = '';
-        $wrapper_close = '';
+        // Item class
         $item_class = '';
 
-        // Only apply grid for style two
         if ($blog_style === 'blog_style_two') {
-
-            $wrapper_open = '<div class="row">';
-            $wrapper_close = '</div>';
 
             // No sidebar → 3 columns
             if ($blog_sidebar == '1') {
@@ -238,9 +232,10 @@ if (!function_exists('exsit_blog_content_cb')) {
             else {
                 $item_class = 'col-lg-6 col-sm-12 article-style-two';
             }
-        }
 
-        echo $wrapper_open;
+            // OPEN wrapper (direct output = safest)
+            echo '<div class="row">';
+        }
 
         if (have_posts()) {
             while (have_posts()) {
@@ -261,7 +256,10 @@ if (!function_exists('exsit_blog_content_cb')) {
             get_template_part('templates/content', 'none');
         }
 
-        echo $wrapper_close;
+        // CLOSE wrapper
+        if ($blog_style === 'blog_style_two') {
+            echo '</div>';
+        }
     }
 }
 
@@ -474,14 +472,14 @@ if (!function_exists('exsit_blog_post_thumb_cb')) {
         } elseif ($format === 'video' && !empty($meta['post_format_video'])) {
 
             echo '<div class="post-image blog-video overflow-hidden rounded-4">';
-            echo wp_oembed_get(esc_url($meta['post_format_video']));
+            echo wp_kses_post( wp_oembed_get( esc_url( $meta['post_format_video'] ) ) );
             echo '</div>';
 
             // 4) Audio fallback
         } elseif ($format === 'audio' && !empty($meta['post_format_audio'])) {
 
             echo '<div class="post-image blog-audio overflow-hidden rounded-4">';
-            echo wp_oembed_get(esc_url($meta['post_format_audio']));
+            echo wp_kses_post( wp_oembed_get( esc_url( $meta['post_format_audio'] ) ) );
             echo '</div>';
         }
     }
@@ -1109,180 +1107,132 @@ if (!function_exists('exsit_page_content_cb')) {
     }
 }
 
-function exsit_add_blog_layout_meta_box() {
-    add_meta_box(
-        'exsit_blog_layout',
-        'Blog Layout',
-        'exsit_blog_layout_meta_callback',
-        'post', // or your CPT slug
-        'side',
-        'high'
-    );
-}
+// Page Title Hook Function
+if (!function_exists('exsit_page_title_cb')) {
+    function exsit_page_title_cb() {
+        echo '<!-- PAGETITLE WRAPPER  -->';
+        echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
+            echo '<div class="container py-100">';
+                echo '<div class="row justify-content-center">';
+                    echo '<div class="col-lg-7 text-center justify-content-center">';
 
-
-function exsit_blog_layout_meta_callback($post) {
-    $value = get_post_meta($post->ID, '_exsit_blog_layout', true);
-    ?>
-    <select name="exsit_blog_layout" style="width:100%;">
-        <option value="">Default (Theme Option)</option>
-        <option value="left" <?php selected($value, 'left'); ?>>Left Sidebar</option>
-        <option value="right" <?php selected($value, 'right'); ?>>Right Sidebar</option>
-        <option value="none" <?php selected($value, 'none'); ?>>No Sidebar</option>
-    </select>
-    <?php
-}
-
-function exsit_save_blog_layout_meta($post_id) {
-    if (isset($_POST['exsit_blog_layout'])) {
-        update_post_meta($post_id, '_exsit_blog_layout', sanitize_text_field($_POST['exsit_blog_layout']));
-    }
-}
-
-
-function exsit_add_product_layout_meta_box() {
-    add_meta_box(
-        'exsit_product_layout',
-        'Product Layout',
-        'exsit_product_layout_meta_callback',
-        'product', // ✅ product post type
-        'side',
-        'high'
-    );
-}
-
-function exsit_product_layout_meta_callback($post) {
-    $value = get_post_meta($post->ID, '_exsit_product_layout', true);
-    ?>
-    <select name="exsit_product_layout" style="width:100%;">
-        <option value="">Default (Theme Option)</option>
-        <option value="layout1" <?php selected($value, 'layout1'); ?>>Layout 1</option>
-        <option value="layout2" <?php selected($value, 'layout2'); ?>>Layout 2</option>
-        <option value="layout3" <?php selected($value, 'layout3'); ?>>Layout 3</option>
-    </select>
-    <?php
-}
-
-function exsit_save_product_layout_meta($post_id) {
-    if (isset($_POST['exsit_product_layout'])) {
-        update_post_meta(
-            $post_id,
-            '_exsit_product_layout',
-            sanitize_text_field($_POST['exsit_product_layout'])
-        );
-    }
-}
-
-function exsit_page_title_cb() {
-
-    echo '<!-- PAGETITLE WRAPPER  -->';
-    echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
-        echo '<div class="container py-100">';
-            echo '<div class="row justify-content-center">';
-                echo '<div class="col-lg-7 text-center justify-content-center">';
-
-                    // ===== TITLE =====
-                    echo '<h1 class="display6-size text-gray-900 fw-700 mb-lg-2 mb-13 lh-5">';
-
-                    if ( is_search() ) {
-
-                        echo esc_html__('Search result', 'exsit');
-
-                    } elseif ( function_exists('is_shop') && is_shop() ) {
-
-                        echo '<span>' . esc_html( get_the_title( wc_get_page_id('shop') ) ) . '</span>';
-
-                    } elseif ( is_category() ) {
-
-                        echo '<span>Category : ' . esc_html( single_term_title('', false) ) . '</span>';
-
-                    } elseif ( is_tag() ) {
-
-                        echo '<span>Tag : ' . esc_html( single_term_title('', false) ) . '</span>';
-
-                    } elseif ( is_product_tag() ) {
-
-                        echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
-
-                    } elseif ( is_product_category() ) {
-
-                        echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
-
-                    } elseif ( is_archive() ) {
-
-                        $title = get_the_archive_title();
-                        $title = preg_replace('/^\w+:\s/', '', $title);
-
-                        echo '<span>' . esc_html( $title ) . '</span>';
-
-                    } elseif ( is_404() ) {
-
-                        echo esc_html__('Page Not Found', 'exsit');
-
-                    } else {
-
-                        echo esc_html( get_the_title() );
-                    }
-
-                    echo '</h1>';
-
-                    // ===== BREADCRUMB =====
-                    echo '<p class="d-flex align-items-center justify-content-center gap-2 mt-3 mb-0">';
-
-                        // Home
-                        echo '<span class="text-gray-800 fw-500">';
-                            echo '<a href="' . esc_url( home_url('/') ) . '" class="text-gray-800">';
-                                echo esc_html__('Home', 'exsit');
-                            echo '</a>';
-                        echo '</span>';
-
-                        // Arrow
-                        echo '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">';
-                            echo '<polyline points="9 18 15 12 9 6"></polyline>';
-                        echo '</svg>';
-
-                        // Second item
-                        echo '<span class="text-gray-800 fw-500">';
+                        // ===== TITLE =====
+                        echo '<h1 class="display6-size text-gray-900 fw-700 mb-lg-2 mb-13 lh-5">';
 
                         if ( is_search() ) {
 
-                            echo esc_html( get_search_query() );
+                            echo esc_html__('Search result', 'exsit');
 
                         } elseif ( function_exists('is_shop') && is_shop() ) {
 
-                            echo esc_html( get_the_title( wc_get_page_id('shop') ) );
+                            echo '<span>' . esc_html( get_the_title( wc_get_page_id('shop') ) ) . '</span>';
 
-                        } elseif ( is_category() || is_tag() ) {
+                        } elseif ( is_category() ) {
 
-                            echo esc_html( single_term_title('', false) );
+                            echo '<span>Category : ' . esc_html( single_term_title('', false) ) . '</span>';
 
-                        } elseif ( is_product_category() || is_product_tag() ) {
+                        } elseif ( is_tag() ) {
 
-                            echo esc_html( single_term_title('', false) );
+                            echo '<span>Tag : ' . esc_html( single_term_title('', false) ) . '</span>';
+
+                        } elseif ( is_product_tag() ) {
+
+                            echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
+
+                        } elseif ( is_product_category() ) {
+
+                            echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
 
                         } elseif ( is_archive() ) {
 
                             $title = get_the_archive_title();
                             $title = preg_replace('/^\w+:\s/', '', $title);
 
-                            echo esc_html( $title );
+                            echo '<span>' . esc_html( $title ) . '</span>';
 
                         } elseif ( is_404() ) {
 
-                            echo esc_html__('404', 'exsit');
+                            echo esc_html__('Page Not Found', 'exsit');
 
                         } else {
 
                             echo esc_html( get_the_title() );
                         }
 
-                        echo '</span>';
+                        echo '</h1>';
 
-                    echo '</p>';
+                        // ===== BREADCRUMB =====
+                        echo '<p class="d-flex align-items-center justify-content-center gap-2 mt-3 mb-0">';
 
+                            // Home
+                            echo '<span class="text-gray-800 fw-500">';
+                                echo '<a href="' . esc_url( home_url('/') ) . '" class="text-gray-800">';
+                                    echo esc_html__('Home', 'exsit');
+                                echo '</a>';
+                            echo '</span>';
+
+                            // Arrow
+                            echo '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">';
+                                echo '<polyline points="9 18 15 12 9 6"></polyline>';
+                            echo '</svg>';
+
+                            // Second item
+                            echo '<span class="text-gray-800 fw-500">';
+
+                            if ( is_search() ) {
+
+                                echo esc_html( get_search_query() );
+
+                            } elseif ( function_exists('is_shop') && is_shop() ) {
+
+                                echo esc_html( get_the_title( wc_get_page_id('shop') ) );
+
+                            } elseif ( is_category() || is_tag() ) {
+
+                                echo esc_html( single_term_title('', false) );
+
+                            } elseif ( is_product_category() || is_product_tag() ) {
+
+                                echo esc_html( single_term_title('', false) );
+
+                            } elseif ( is_archive() ) {
+
+                                $title = get_the_archive_title();
+                                $title = preg_replace('/^\w+:\s/', '', $title);
+
+                                echo esc_html( $title );
+
+                            } elseif ( is_404() ) {
+
+                                echo esc_html__('404', 'exsit');
+
+                            } else {
+
+                                echo esc_html( get_the_title() );
+                            }
+
+                            echo '</span>';
+
+                        echo '</p>';
+
+                    echo '</div>';
                 echo '</div>';
-            echo '</div>';
-        echo '</div>';  
-    echo '</div>';
-    echo '<!-- END PAGETITLE WRAPPER  -->';
+            echo '</div>';  
+        echo '</div>';
+        echo '<!-- END PAGETITLE WRAPPER  -->';
+    }
+}
+
+
+if (!function_exists('exsit_blog_post_tags_cb')) {
+    function exsit_blog_post_tags_cb() {
+
+        if (!is_single() || !has_tag()) {
+            return;
+        }
+
+        echo '<div class="post-tags">';
+        echo get_the_tag_list('', ' ');
+        echo '</div>';
+    }
 }

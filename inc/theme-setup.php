@@ -75,6 +75,42 @@ if ( ! function_exists( 'exsit_setup' ) ) {
         add_theme_support( 'woocommerce' );
         add_theme_support( 'wc-product-gallery-zoom' );
         add_theme_support( 'wc-product-gallery-slider' );
+
+        add_theme_support( 'custom-header', array(
+            'width'       => 1920,
+            'height'      => 300,
+            'flex-height' => true,
+        ) );
+
+        add_theme_support( 'custom-background', array(
+            'default-color' => 'ffffff',
+        ) );
+
+        add_action('init', function () {
+            // Block Style
+            if (function_exists('register_block_style')) {
+                register_block_style(
+                    'core/image',
+                    array(
+                        'name'  => 'exsit-rounded',
+                        'label' => __('Rounded Image', 'exsit'),
+                    )
+                );
+            }
+
+            // Block Pattern
+            if (function_exists('register_block_pattern')) {
+                register_block_pattern(
+                    'exsit/hero-section',
+                    array(
+                        'title'   => __('Hero Section', 'exsit'),
+                        'content' => '<!-- wp:heading --><h2>Exsit Hero Section</h2><!-- /wp:heading -->',
+                    )
+                );
+            }
+        });
+
+
     }
 }
 

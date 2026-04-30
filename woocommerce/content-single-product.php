@@ -67,9 +67,9 @@ if ($layout === 'layout2') {
 				 * Hook: woocommerce_single_product_summary.
 				 *
 				 * @hooked woocommerce_template_single_title - 5
-				 * @hooked lonyo_woocommerce_single_product_price_rating - 30
+				 * @hooked exsit_woocommerce_single_product_price_rating - 30
 				 * @hooked woocommerce_template_single_excerpt - 40
-				 * @hooked lonyo_woocommerce_single_product_availability - 50
+				 * @hooked exsit_woocommerce_single_product_availability - 50
 				 * @hooked woocommerce_template_single_meta - 40
 				 * @hooked woocommerce_template_single_sharing - 50
 				 * @hooked WC_Structured_Data::generate_product_data() - 60

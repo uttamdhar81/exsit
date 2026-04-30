@@ -16,6 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 * Hook for preloader
 */
 add_action( 'wp_body_open', 'exsit_preloader_wrap' );
+
+
 /**
 * Hook for Header
 */
@@ -55,6 +57,7 @@ add_action( 'exsit_blog_details_related_post', 'exsit_blog_details_related_post_
 add_action( 'exsit_blog_details_comments', 'exsit_blog_details_comments_cb', 10 );
 add_action( 'exsit_blog_details_hero', 'exsit_blog_details_hero_cb', 10 );
 add_action( 'exsit_blog_details_share_options', 'exsit_blog_details_share_options_cb', 10 );
+add_action( 'exsit_blog_details_tags', 'exsit_blog_post_tags_cb', 10);
 
 /**
  * Blog card components (loop items)
@@ -85,10 +88,7 @@ add_action( 'exsit_footer_content', 'exsit_footer_content_cb', 10 );
 
 // Add Meta Box Layout Selector for Single Blog Post
 
-add_action('add_meta_boxes', 'exsit_add_blog_layout_meta_box');
-add_action('save_post', 'exsit_save_blog_layout_meta');
-
 add_action('exsit_page_title', 'exsit_page_title_cb', 10);
 
-add_action('add_meta_boxes', 'exsit_add_product_layout_meta_box');
-add_action('save_post', 'exsit_save_product_layout_meta');
+
+

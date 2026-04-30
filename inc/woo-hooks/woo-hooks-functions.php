@@ -420,7 +420,7 @@ if( !function_exists('exsit_woocommerce_button_proceed_to_checkout') ) {
     function exsit_woocommerce_button_proceed_to_checkout() {
         echo '<a href="'.esc_url( wc_get_checkout_url() ).'" class="checkout-button button alt wc-forward exsit-btn exsit-default-btn btn-style"  data-text="Proceed to checkout">';
             echo '<span class="btn-wraper">';
-                esc_html_e( 'Proceed to checkout', 'lonyo' );
+                esc_html_e( 'Proceed to checkout', 'exsit' );
             echo '</span>';
         echo '</a>';
     }
