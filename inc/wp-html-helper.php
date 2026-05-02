@@ -51,7 +51,7 @@ if ( ! function_exists( 'exsit_img_tag' ) ) {
 
         $alt = ! empty( $args['alt'] )
             ? $args['alt']
-            : ( function_exists( 'exsit_image_alt' ) ? exsit_image_alt( $args['url'] ) : '' );
+            : ( function_exists( 'exsit_image_alt' ) ? exsit_image_alt( $args['url'] ) : get_the_title() );
 
         $attr = '';
 
@@ -73,14 +73,19 @@ if ( ! function_exists( 'exsit_img_tag' ) ) {
         if ( ! empty( $args['sizes'] ) ) {
             $attr .= ' sizes="' . esc_attr( $args['sizes'] ) . '"';
         }
-        if ( ! empty( $args['loading'] ) ) {
+        if ( isset( $args['loading'] ) ) {
             $attr .= ' loading="' . esc_attr( $args['loading'] ) . '"';
         }
-        if ( ! empty( $args['decoding'] ) ) {
+        if ( isset( $args['decoding'] ) ) {
             $attr .= ' decoding="' . esc_attr( $args['decoding'] ) . '"';
         }
 
-        return '<img src="' . esc_url( $args['url'] ) . '" alt="' . esc_attr( $alt ) . '"' . $attr . ' />';
+        return sprintf(
+            '<img src="%s" alt="%s"%s />',
+            esc_url( $args['url'] ),
+            esc_attr( $alt ),
+            $attr
+        );
     }
 }
 

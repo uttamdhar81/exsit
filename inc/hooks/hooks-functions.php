@@ -251,7 +251,7 @@ if (!function_exists('exsit_blog_content_cb')) {
                     echo '</div>';
                 }
             }
-            wp_reset_postdata();
+            
         } else {
             get_template_part('template-parts/content', 'none');
         }
@@ -434,9 +434,9 @@ if (!function_exists('exsit_blog_post_thumb_cb')) {
                 }
 
                 echo exsit_img_tag(array(
-                    'url' => esc_url($img),
-                    'alt' => get_the_title(),
-                    'class' => 'img-fluid',
+                    'url'     => $img,
+                    'alt'     => get_the_title(),
+                    'class'   => 'img-fluid',
                     'loading' => 'lazy',
                 ));
 
@@ -928,6 +928,8 @@ if (!function_exists('exsit_blog_details_related_post_cb')) {
             'posts_per_page' => 3,
             'category__in'        => $categories,
             'post__not_in' => array(get_the_ID()),
+            'ignore_sticky_posts' => true,
+            'no_found_rows'       => true,
         ));
 
         if ($relatedpost->have_posts()) {
@@ -999,7 +1001,7 @@ if (!function_exists('exsit_page_col_start_wrap_cb')) {
 
             } else {
                 // No Sidebar / Full Width
-                echo '<div class="col-lg-12 boot">';
+                echo '<div class="col-lg-12">';
             }
 
         } else {
@@ -1066,7 +1068,7 @@ if (!function_exists('exsit_page_sidebar_cb')) {
 
         // Output sidebar
         echo '<div class="col-lg-4">';
-        echo '<div class="sidebar-area sticky-sidebar" role="complementary" aria-label="Page Sidebar">';
+        echo '<div class="sidebar-area sticky-sidebar" role="complementary" aria-label="' . esc_attr__('Page Sidebar', 'exsit') . '">';
         dynamic_sidebar($sidebar_id);
         echo '</div>';
         echo '</div>';
