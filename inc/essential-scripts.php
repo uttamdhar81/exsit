@@ -38,6 +38,7 @@ function exsit_essential_scripts(){
         $version,
         true
     );
+    
 
     // Comment reply (WordPress core)
     if (is_singular() && comments_open() && get_option('thread_comments')) {
