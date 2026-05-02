@@ -41,8 +41,8 @@ if (!function_exists('exsit_header_cb')) {
     function exsit_header_cb()
     {
         echo '<!-- HEADER  -->';
-        get_template_part('templates/header');
-        get_template_part('templates/header-menu-bottom');
+        get_template_part('template-parts/header');
+        get_template_part('template-parts/header-menu-bottom');
     }
 }
 /**
@@ -245,7 +245,7 @@ if (!function_exists('exsit_blog_content_cb')) {
                     echo '<div class="' . esc_attr($item_class) . '">';
                 }
 
-                get_template_part('templates/content', get_post_format());
+                get_template_part('template-parts/content', get_post_format());
 
                 if (!empty($item_class)) {
                     echo '</div>';
@@ -253,7 +253,7 @@ if (!function_exists('exsit_blog_content_cb')) {
             }
             wp_reset_postdata();
         } else {
-            get_template_part('templates/content', 'none');
+            get_template_part('template-parts/content', 'none');
         }
 
         // CLOSE wrapper
@@ -267,7 +267,7 @@ if (!function_exists('exsit_blog_content_cb')) {
 if (!function_exists('exsit_blog_pagination_cb')) {
     function exsit_blog_pagination_cb()
     {
-        get_template_part('templates/pagination');
+        get_template_part('template-parts/pagination');
     }
 }
 
@@ -368,13 +368,13 @@ if (!function_exists('exsit_blog_post_content_cb')) {
 
             <!-- Title -->
             <h2 class="post-title text-gray-900 fw-600 mb-1">
-                <a class="text-gray-900" href="<?php the_permalink(); ?>">
-                    <?php the_title(); ?>
+                <a class="text-gray-900" href="<?php echo esc_url( get_permalink() ); ?>">
+                    <?php echo esc_html( get_the_title() ); ?>
                 </a>
             </h2>
 
             <!-- Excerpt -->
-            <p class="text-gray-900 fw-400 text-gray-700 mt-1 pe-lg-5 mb-2">
+            <p class="text-gray-800 fw-400 mt-1 pe-lg-5 mb-2">
                 <?php
                 $excerpt_length = 24; // default fallback
         
@@ -521,7 +521,7 @@ if (!function_exists('exsit_footer_content_cb')) {
                 // Fallback text if option is empty
                 echo sprintf(
                     esc_html__('Exsit Sass © %s – All Rights Reserved', 'exsit'),
-                    date('Y')
+                    esc_html( date_i18n( 'Y' ) )
                 );
             }
 
@@ -529,7 +529,7 @@ if (!function_exists('exsit_footer_content_cb')) {
             // Fallback if helper plugin is not active
             echo sprintf(
                 esc_html__('Exsit Sass © %s – All Rights Reserved', 'exsit'),
-                date('Y')
+                esc_html( date_i18n( 'Y' ) )
             );
         }
 
@@ -916,18 +916,24 @@ if (!function_exists('exsit_blog_details_related_post_cb')) {
             return;
         }
 
+        $categories = wp_get_post_categories( get_the_ID() );
+
+        if ( empty( $categories ) ) {
+            return;
+        }
+
         // Query related posts by same categories
         $relatedpost = new WP_Query(array(
             'post_type' => 'post',
             'posts_per_page' => 3,
-            'category__in' => wp_get_post_categories(get_the_ID()),
+            'category__in'        => $categories,
             'post__not_in' => array(get_the_ID()),
         ));
 
         if ($relatedpost->have_posts()) {
 
             echo '<!-- Related Post -->';
-            echo '<div class="col-12">';
+            echo '<div class="col-12 related-post">';
             echo '<h2 class="fw-600 display5-size text-gray-900 mb-5 pt-2 text-center">';
             echo esc_html__('Related', 'exsit') . ' <span class="text-theme">' . esc_html__('posts', 'exsit') . '</span>';
             echo '</h2>';
@@ -940,9 +946,9 @@ if (!function_exists('exsit_blog_details_related_post_cb')) {
                 echo '<div class="col-lg-4 col-md-6 col-sm-12 article-style-two">';
 
                 // 🔥 Reuse your blog style template
-                get_template_part('templates/blog-style-two');
+                // get_template_part('templates/blog-style-two');
                 // OR (recommended naming):
-                // get_template_part( 'templates/content', 'blog-style-two' );
+                get_template_part( 'template-parts/content', 'blog-style-two' );
 
                 echo '</div>';
             }

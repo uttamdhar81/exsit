@@ -12,4 +12,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Load default blog style (no special audio layout for now)
-get_template_part( 'templates/blog-style-one' );
+get_template_part( 'template-parts/blog-style-one' );

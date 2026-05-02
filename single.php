@@ -42,14 +42,18 @@ do_action( 'exsit_blog_details_col_start' );
  *
  * Hook exsit_blog_details_content
  *
- * @Hooked templates/content-single.php
+ * @Hooked template-parts/content-single.php
  */
-while ( have_posts() ) :
-    the_post();
+if ( have_posts() ) :
+    while ( have_posts() ) :
+        the_post();
 
-    get_template_part( 'templates/content', 'single' );
+        get_template_part( 'template-parts/content', 'single' );
 
-endwhile;
+    endwhile;
+else :
+    get_template_part( 'template-parts/content', 'none' );
+endif;
 
 /**
  * Hook for Blog Details Column End

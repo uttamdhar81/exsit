@@ -12,7 +12,9 @@ if (!defined('ABSPATH')) {
 
 echo '<!-- Single Post -->';
 ?>
-<div class="post-article flex-column gap-4 flex-column mb-4" aria-label="article" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="300" <?php post_class(); ?>>
+<article <?php post_class('post-article flex-column gap-4 mb-4'); ?>
+        aria-label="<?php echo esc_attr( get_the_title() ); ?>"
+        data-aos="zoom-in" data-aos-delay="0" data-aos-duration="300">
 
     <?php
     // Blog Post Thumbnail
@@ -22,6 +24,6 @@ echo '<!-- Single Post -->';
     do_action('exsit_blog_post_content');
     ?>
 
-</div>
+</article>
 <?php
 echo '<!-- End Single Post -->';

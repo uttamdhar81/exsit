@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
@@ -9,7 +9,9 @@
 <body <?php body_class(); ?>>
 
 <?php
-    wp_body_open();
+    if ( function_exists( 'wp_body_open' ) ) {
+        wp_body_open();
+    }
 
     /**
     *

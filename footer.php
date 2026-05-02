@@ -32,11 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         * @Hooked exsit_back_to_top_cb 10
         *
         */
-        do_action( 'exsit_back_to_top
-        
-        
-        
-        ' );
+        do_action( 'exsit_back_to_top');
     }
 
 
