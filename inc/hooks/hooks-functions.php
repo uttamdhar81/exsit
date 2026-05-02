@@ -72,7 +72,7 @@ if (!function_exists('exsit_back_to_top_cb')) {
     function exsit_back_to_top_cb()
     {
         ?>
-        <div class="arrow-round">
+        <div class="arrow-round" aria-label="<?php esc_attr_e('Back to top', 'exsit'); ?>">
             <div class="arrow-round-wrap primary">
                 <svg class="arrow-circle svg-content text-white" width="100%" height="100%" viewBox="-1 -1 102 102">
                     <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
@@ -472,7 +472,10 @@ if (!function_exists('exsit_blog_post_thumb_cb')) {
         } elseif ($format === 'video' && !empty($meta['post_format_video'])) {
 
             echo '<div class="post-image blog-video overflow-hidden rounded-4">';
-            echo wp_kses_post( wp_oembed_get( esc_url( $meta['post_format_video'] ) ) );
+            $embed = wp_oembed_get( esc_url( $meta['post_format_video'] ) );
+            if ( $embed ) {
+                echo wp_kses_post( $embed );
+            }
             echo '</div>';
 
             // 4) Audio fallback
@@ -1078,7 +1081,7 @@ if (!function_exists('exsit_page_end_wrap_cb')) {
 
 // Page content hook function
 if (!function_exists('exsit_page_content_cb')) {
-    if (!function_exists('exsit_page_content_cb')) {
+    function exsit_page_content_cb() {
         function exsit_page_content_cb()
         {
             echo '<!-- PAGE CONTENT -->';
@@ -1232,7 +1235,7 @@ if (!function_exists('exsit_blog_post_tags_cb')) {
         }
 
         echo '<div class="post-tags">';
-        echo get_the_tag_list('', ' ');
+        echo wp_kses_post( get_the_tag_list('', ' ') );
         echo '</div>';
     }
 }
