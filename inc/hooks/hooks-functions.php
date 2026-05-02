@@ -1082,30 +1082,27 @@ if (!function_exists('exsit_page_end_wrap_cb')) {
 // Page content hook function
 if (!function_exists('exsit_page_content_cb')) {
     function exsit_page_content_cb() {
-        function exsit_page_content_cb()
-        {
-            echo '<!-- PAGE CONTENT -->';
-            // WooCommerce-aware wrapper
-            if (class_exists('woocommerce') && (is_woocommerce() || is_cart() || is_checkout() || is_account_page())) {
-                echo '<div class="woocommerce--content">';
-            } else {
-                echo '<div class="page--content clearfix">';
-            }
+        echo '<!-- PAGE CONTENT -->';
+        // WooCommerce-aware wrapper
+        if (class_exists('woocommerce') && (is_woocommerce() || is_cart() || is_checkout() || is_account_page())) {
+            echo '<div class="woocommerce--content">';
+        } else {
+            echo '<div class="page--content clearfix">';
+        }
 
-            the_content();
+        the_content();
 
-            // Support paginated pages
-            wp_link_pages(array(
-                'before' => '<div class="page-links">' . esc_html__('Pages:', 'exsit'),
-                'after' => '</div>',
-            ));
+        // Support paginated pages
+        wp_link_pages(array(
+            'before' => '<div class="page-links">' . esc_html__('Pages:', 'exsit'),
+            'after' => '</div>',
+        ));
 
-            echo '</div>';
+        echo '</div>';
 
-            // Comments on pages (optional, Envato-friendly)
-            if (comments_open() || get_comments_number()) {
-                comments_template();
-            }
+        // Comments on pages (optional, Envato-friendly)
+        if (comments_open() || get_comments_number()) {
+            comments_template();
         }
     }
 }
