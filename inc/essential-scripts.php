@@ -38,7 +38,7 @@ function exsit_essential_scripts(){
         $version,
         true
     );
-    
+
 
 
     // Comment reply (WordPress core)
@@ -52,19 +52,12 @@ add_action('wp_enqueue_scripts', 'exsit_essential_scripts', 99);
 /**
  * Preload local fonts
  */
-function exsit_preload_fonts( $html, $handle ) {
-    if ( 'exsit-main-style' === $handle ) {
-        $fonts = array(
-            '/assets/fonts/Sora-400.woff2',
-            '/assets/fonts/Sora-500.woff2',
-            '/assets/fonts/Sora-600.woff2',
-            '/assets/fonts/Sora-700.woff2',
-        );
-
-        foreach ( $fonts as $font ) {
-            $html .= '<link rel="preload" href="' . esc_url( get_theme_file_uri( $font ) ) . '" as="font" type="font/woff2" crossorigin>';
-        }
-    }
-    return $html;
+function exsit_preload_fonts() {
+    ?>
+    <link rel="preload" href="<?php echo esc_url( get_theme_file_uri('/assets/fonts/Sora-400.woff2') ); ?>" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<?php echo esc_url( get_theme_file_uri('/assets/fonts/Sora-500.woff2') ); ?>" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<?php echo esc_url( get_theme_file_uri('/assets/fonts/Sora-600.woff2') ); ?>" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<?php echo esc_url( get_theme_file_uri('/assets/fonts/Sora-700.woff2') ); ?>" as="font" type="font/woff2" crossorigin>
+    <?php
 }
-add_filter( 'style_loader_tag', 'exsit_preload_fonts', 10, 2 );
+add_action( 'wp_head', 'exsit_preload_fonts', 1 );
