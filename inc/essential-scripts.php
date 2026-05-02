@@ -38,14 +38,14 @@ function exsit_essential_scripts(){
         $version,
         true
     );
-    
+
 
     // Comment reply (WordPress core)
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
 }
-add_action('wp_enqueue_scripts', 'exsit_essential_scripts');
+add_action('wp_enqueue_scripts', 'exsit_essential_scripts', 99);
 
 
 /**
