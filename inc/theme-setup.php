@@ -86,32 +86,39 @@ if ( ! function_exists( 'exsit_setup' ) ) {
             'default-color' => 'ffffff',
         ) );
 
-        add_action('init', function () {
-            // Block Style
-            if (function_exists('register_block_style')) {
-                register_block_style(
-                    'core/image',
-                    array(
-                        'name'  => 'exsit-rounded',
-                        'label' => __('Rounded Image', 'exsit'),
-                    )
-                );
-            }
-
-            // Block Pattern
-            if (function_exists('register_block_pattern')) {
-                register_block_pattern(
-                    'exsit/hero-section',
-                    array(
-                        'title'   => __('Hero Section', 'exsit'),
-                        'content' => '<!-- wp:heading --><h2>Exsit Hero Section</h2><!-- /wp:heading -->',
-                    )
-                );
-            }
-        });
-
-
     }
 }
 
 add_action( 'after_setup_theme', 'exsit_setup' );
+
+
+/**
+ * Register block styles & patterns
+ */
+if ( ! function_exists( 'exsit_register_blocks' ) ) {
+    function exsit_register_blocks() {
+
+        // Block Style
+        if ( function_exists( 'register_block_style' ) ) {
+            register_block_style(
+                'core/image',
+                array(
+                    'name'  => 'exsit-rounded',
+                    'label' => esc_html__( 'Rounded Image', 'exsit' ),
+                )
+            );
+        }
+
+        // Block Pattern
+        if ( function_exists( 'register_block_pattern' ) ) {
+            register_block_pattern(
+                'exsit/hero-section',
+                array(
+                    'title'   => esc_html__( 'Hero Section', 'exsit' ),
+                    'content' => '<!-- wp:heading --><h2>Exsit Hero Section</h2><!-- /wp:heading -->',
+                )
+            );
+        }
+    }
+}
+add_action( 'init', 'exsit_register_blocks' );

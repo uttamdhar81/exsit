@@ -98,7 +98,7 @@ if ( ! function_exists( 'exsit_global_header' ) ) {
                                     echo exsit_theme_logo();
                                 echo '</div>';
 
-                                echo '<div class="menu-close" role="button" aria-label="Close menu">';
+                                echo '<div class="menu-close" role="button" aria-label="<?php esc_attr_e('Close menu', 'exsit'); ?>" >';
                                     echo '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';                                
                                 echo '</div>';
                             echo '</div>';
@@ -190,11 +190,15 @@ function exsit_link_pages() {
 /**
  * Data background image attribute helper
  */
-function exsit_data_bg_attr( $img_url = '' ) {
-    if ( empty( $img_url ) ) {
-        return '';
+if ( ! function_exists( 'exsit_data_bg_attr' ) ) {
+    function exsit_data_bg_attr( $img_url = '' ) {
+
+        if ( empty( $img_url ) ) {
+            return '';
+        }
+
+        return ' data-bg-img="' . esc_url( $img_url ) . '"';
     }
-    return 'data-bg-img="' . esc_url( $img_url ) . '"';
 }
 
 /**
@@ -221,14 +225,22 @@ function exsit_image_alt( $url = '' ) {
 /**
  * Blog category link
  */
-function exsit_blog_category()
-{
-    $cats = get_the_category();
-    if (!empty($cats)) {
-        echo '<a href="' . esc_url(get_term_link($cats[0])) . '">' . esc_html($cats[0]->name) . '</a>';
+if ( ! function_exists( 'exsit_blog_category' ) ) {
+    function exsit_blog_category() {
+
+        $cats = get_the_category();
+
+        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
+
+            $cat  = $cats[0];
+            $link = get_term_link( $cat );
+
+            if ( ! is_wp_error( $link ) ) {
+                echo '<a href="' . esc_url( $link ) . '">' . esc_html( $cat->name ) . '</a>';
+            }
+        }
     }
 }
-
 /**
  * Pingback header
  */
@@ -243,9 +255,10 @@ add_action('wp_head', 'exsit_pingback_header');
 /**
  * Excerpt more
  */
-add_filter('excerpt_more', function () {
+function exsit_excerpt_more() {
     return '…';
-});
+}
+add_filter('excerpt_more', 'exsit_excerpt_more');
 
 /**
  * Pagination (WordPress native)
@@ -278,19 +291,33 @@ if ( ! function_exists( 'exsit_pagination' ) ) {
 
 if ( ! function_exists( 'exsit_estimated_reading_time' ) ) {
     function exsit_estimated_reading_time( $wpm = 200 ) {
-        $content = get_post_field( 'post_content', get_the_ID() );
+
+        $post_id = get_the_ID();
+
+        if ( ! $post_id ) {
+            $post_id = get_queried_object_id();
+        }
+
+        if ( ! $post_id ) {
+            return '';
+        }
+
+        $content    = get_post_field( 'post_content', $post_id );
         $word_count = str_word_count( wp_strip_all_tags( $content ) );
-        $minutes = ceil( $word_count / $wpm );
-        return sprintf( _n( '%d min read', '%d mins read', $minutes, 'exsit' ), $minutes );
+
+        if ( $word_count === 0 ) {
+            return esc_html__( '1 min read', 'exsit' );
+        }
+
+        $minutes = ceil( $word_count / max( 1, (int) $wpm ) );
+
+        return sprintf(
+            esc_html( _n( '%d min read', '%d mins read', $minutes, 'exsit' ) ),
+            (int) $minutes
+        );
     }
 }
 
-if ( ! function_exists( 'exsit_opt' ) ) {
-    function exsit_opt( $option = '', $default = null ) {
-        $options = get_option( 'exsit_settings' );  // <-- your Exsit options key
-        return ( isset( $options[ $option ] ) ) ? $options[ $option ] : $default;
-    }
-}
 
 function exsit_comment_callback( $comment, $args, $depth ) {
     ?>
@@ -300,7 +327,7 @@ function exsit_comment_callback( $comment, $args, $depth ) {
                 <?php echo get_avatar( $comment, 64 ); ?>
             </div>
             <div class="comment-content">
-                <p class="comment-author"><?php comment_author(); ?></p>
+                <p class="comment-author"><?php echo esc_html( get_comment_author() ); ?></p>
                 <span class="comment-date"><?php echo get_comment_date(); ?></span>
                 <div class="comment-text"><?php comment_text(); ?></div>
                 <div class="reply">
