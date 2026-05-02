@@ -76,6 +76,8 @@ if ( ! function_exists( 'exsit_setup' ) ) {
         add_theme_support( 'wc-product-gallery-zoom' );
         add_theme_support( 'wc-product-gallery-slider' );
 
+        add_image_size( 'exsit-small-blog', 460, 366, true );
+
         add_theme_support( 'custom-header', array(
             'width'       => 1920,
             'height'      => 300,
