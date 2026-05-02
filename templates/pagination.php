@@ -42,6 +42,7 @@ if (get_the_posts_pagination()):
         }
         ?>
 
+
     </nav>
     <!-- End of Post Pagination -->
 
