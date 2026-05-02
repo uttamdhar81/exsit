@@ -26,18 +26,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   'srcset'=> $srcset,
  * ]);
  */
+
 if ( ! function_exists( 'exsit_img_tag' ) ) {
     function exsit_img_tag( array $args ) {
 
         $defaults = array(
-            'url'    => '',
-            'alt'    => '',
-            'class'  => '',
-            'id'     => '',
-            'width'  => '',
-            'height' => '',
-            'srcset' => '',
-            'loading'=> 'lazy',
+            'url'      => '',
+            'alt'      => '',
+            'class'    => '',
+            'id'       => '',
+            'width'    => '',
+            'height'   => '',
+            'srcset'   => '',
+            'sizes'    => '',
+            'loading'  => 'lazy',
+            'decoding' => 'async',
         );
 
         $args = wp_parse_args( $args, $defaults );
@@ -46,8 +49,9 @@ if ( ! function_exists( 'exsit_img_tag' ) ) {
             return '';
         }
 
-        // Fallback alt text
-        $alt = ! empty( $args['alt'] ) ? $args['alt'] : exsit_image_alt( $args['url'] );
+        $alt = ! empty( $args['alt'] )
+            ? $args['alt']
+            : ( function_exists( 'exsit_image_alt' ) ? exsit_image_alt( $args['url'] ) : '' );
 
         $attr = '';
 
@@ -58,16 +62,22 @@ if ( ! function_exists( 'exsit_img_tag' ) ) {
             $attr .= ' id="' . esc_attr( $args['id'] ) . '"';
         }
         if ( ! empty( $args['width'] ) ) {
-            $attr .= ' width="' . esc_attr( $args['width'] ) . '"';
+            $attr .= ' width="' . (int) $args['width'] . '"';
         }
         if ( ! empty( $args['height'] ) ) {
-            $attr .= ' height="' . esc_attr( $args['height'] ) . '"';
+            $attr .= ' height="' . (int) $args['height'] . '"';
         }
         if ( ! empty( $args['srcset'] ) ) {
             $attr .= ' srcset="' . esc_attr( $args['srcset'] ) . '"';
         }
+        if ( ! empty( $args['sizes'] ) ) {
+            $attr .= ' sizes="' . esc_attr( $args['sizes'] ) . '"';
+        }
         if ( ! empty( $args['loading'] ) ) {
             $attr .= ' loading="' . esc_attr( $args['loading'] ) . '"';
+        }
+        if ( ! empty( $args['decoding'] ) ) {
+            $attr .= ' decoding="' . esc_attr( $args['decoding'] ) . '"';
         }
 
         return '<img src="' . esc_url( $args['url'] ) . '" alt="' . esc_attr( $alt ) . '"' . $attr . ' />';
@@ -106,6 +116,10 @@ if ( ! function_exists( 'exsit_anchor_tag' ) ) {
         }
         if ( ! empty( $args['target'] ) ) {
             $attr .= ' target="' . esc_attr( $args['target'] ) . '"';
+
+            if ( '_blank' === $args['target'] && empty( $args['rel'] ) ) {
+                $attr .= ' rel="noopener noreferrer"';
+            }
         }
         if ( ! empty( $args['rel'] ) ) {
             $attr .= ' rel="' . esc_attr( $args['rel'] ) . '"';
