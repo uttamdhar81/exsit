@@ -38,6 +38,7 @@ function exsit_essential_scripts(){
         $version,
         true
     );
+    
 
 
     // Comment reply (WordPress core)
