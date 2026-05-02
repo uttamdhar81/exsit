@@ -13,8 +13,7 @@ if (!defined('ABSPATH')) {
 echo '<!-- Single Post -->';
 ?>
 <article <?php post_class('post-article flex-column gap-4 mb-4'); ?>
-        aria-label="<?php echo esc_attr( get_the_title() ); ?>"
-        data-aos="zoom-in" data-aos-delay="0" data-aos-duration="300">
+        aria-label="<?php echo esc_attr( get_the_title() ); ?>">
 
     <?php
     // Blog Post Thumbnail
