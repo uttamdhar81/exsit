@@ -42,6 +42,7 @@ get_header();
                 }
                 ?>
             </div>
+            <div class="col-lg-12"></div>
 
             <div class="col-lg-4 text-center">
                 <h2 class="display5-size fw-700 mb-3 text-gray-900">
