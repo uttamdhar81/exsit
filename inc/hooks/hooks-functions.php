@@ -95,7 +95,7 @@ if (!function_exists('exsit_blog_start_wrap_cb')) {
     function exsit_blog_start_wrap_cb()
     {
 
-        echo '<section class="blog-wrapper pb-100">';
+        echo '<section class="blog-wrapper pb-100 pt-100">';
         echo '<div class="container">';
 
         $exsit_gutter_class = '';
@@ -499,7 +499,7 @@ if (!function_exists('exsit_footer_content_cb')) {
             return;
         }
         echo '<!-- FOOTER WRAPPER  -->';
-        echo '<div class="footer-wrap bg-gray-900 text-gray-100 dark-footer">';
+        echo '<footer class="footer-wrap bg-gray-900 text-gray-100 dark-footer">';
         echo '<div class="container">';
 
         // Separator line
@@ -538,7 +538,7 @@ if (!function_exists('exsit_footer_content_cb')) {
         echo '</div>';
 
         echo '</div>'; // .container
-        echo '</div>'; // .footer-wrap
+        echo '</footer>'; // .footer-wrap
         echo '<!-- FOOTER WRAPPER  -->';
     }
 }
@@ -970,7 +970,7 @@ if (!function_exists('exsit_page_start_wrap_cb')) {
     function exsit_page_start_wrap_cb()
     {
         echo '<!-- MAIN WRAPPER  -->';
-        echo '<section class="page-section pb-100">';
+        echo '<section class="page-section pb-100 pt-100">';
         echo '<div class="container">';
         echo '<div class="row g-5">';
     }
