@@ -617,20 +617,20 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
         $cats = get_the_category();
         if (!empty($cats)) {
             echo '<div class="d-flex flex-row mx-auto justify-content-center mb-3">';
-            echo '<div class="px-3 py-1 border border-gray-200 rounded-3 fs-13 fw-600 text-uppercase text-gray-900 bg-white shadow-sm align-items-center gap-2 d-flex w-auto" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="400">';
+            echo '<div class="px-3 py-1 border border-gray-200 rounded-3 fs-13 fw-600 text-uppercase text-gray-900 bg-white shadow-sm align-items-center gap-2 d-flex w-auto">';
             echo esc_html($cats[0]->name);
             echo '</div>';
             echo '</div>';
         }
 
         // Post Title
-        echo '<h1 class="display5-size text-gray-900 fw-600 mb-lg-2 mb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="0">';
+        echo '<h1 class="display5-size text-gray-900 fw-600 mb-lg-2 mb-1">';
         echo esc_html(get_the_title());
         echo '</h1>';
 
         // Post Excerpt (Subtitle)
         if (has_excerpt()) {
-            echo '<p class="text-gray-700 fw-400 mb-0 fs-16" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">';
+            echo '<p class="text-gray-700 fw-400 mb-0 fs-16" >';
             echo esc_html(get_the_excerpt());
             echo '</p>';
         }
@@ -639,7 +639,7 @@ if (!function_exists('exsit_blog_details_hero_cb')) {
 
         // Featured Image (Full width under hero text)
         if (has_post_thumbnail()) {
-            echo '<div class="col-lg-12 maxw-1200 mt-0" data-aos="fade-up" data-aos-duration="400" data-delay="00">';
+            echo '<div class="col-lg-12 maxw-1200 mt-0">';
             the_post_thumbnail('full', array(
                 'class' => 'object-fit-cover w-100 rounded-4',
                 'loading' => 'eager',

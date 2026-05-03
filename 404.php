@@ -31,7 +31,7 @@ get_header();
     <div class="container">
         <div class="row justify-content-center">
 
-            <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-duration="700">
+            <div class="col-lg-7 text-center">
                 <?php
                 if ( is_array( $exsit_404_image ) && ! empty( $exsit_404_image['url'] ) ) {
                     echo '<div class="error-thumb mb-4">';
@@ -43,7 +43,7 @@ get_header();
                 ?>
             </div>
 
-            <div class="col-lg-4 text-center" data-aos="fade-up" data-aos-duration="700">
+            <div class="col-lg-4 text-center">
                 <h2 class="display5-size fw-700 mb-3 text-gray-900">
                     <?php echo esc_html( $exsit_404_title ); ?>
                 </h2>

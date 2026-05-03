@@ -23,7 +23,7 @@ do_action('exsit_page_title');
  *
  * @Hooked exsit_blog_start_wrap_cb 10
  */
-do_action( 'exsit_blog_start_wrap' );
+do_action( 'exsit_blog_archive_start_wrap' );
 
 /**
  * Hook for Blog Column Start Wrapper
@@ -77,7 +77,7 @@ do_action( 'exsit_page_sidebar' );
  *
  * @Hooked exsit_blog_end_wrap_cb 10
  */
-do_action( 'exsit_blog_end_wrap' );
+do_action( 'exsit_blog_archive_end_wrap' );
 
 // Footer
 get_footer();
