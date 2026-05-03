@@ -1116,118 +1116,127 @@ if (!function_exists('exsit_page_content_cb')) {
 }
 
 // Page Title Hook Function
-if (!function_exists('exsit_page_title_cb')) {
+if ( ! function_exists( 'exsit_page_title_cb' ) ) {
     function exsit_page_title_cb() {
-        echo '<!-- PAGETITLE WRAPPER  -->';
+
+        echo '<!-- PAGETITLE WRAPPER -->';
         echo '<div class="banner-wrap header-top position-relative light-blue-banner">';
-            echo '<div class="container py-100">';
-                echo '<div class="row justify-content-center">';
-                    echo '<div class="col-lg-7 text-center justify-content-center">';
+        echo '<div class="container py-100">';
+        echo '<div class="row justify-content-center">';
+        echo '<div class="col-lg-7 text-center justify-content-center">';
 
-                        // ===== TITLE =====
-                        echo '<h1 class="display6-size text-gray-900 fw-700 mb-lg-2 mb-13 lh-5">';
+        // ===== TITLE =====
+        echo '<h1 class="display6-size text-gray-900 fw-700 mb-lg-2 mb-13 lh-5">';
 
-                        if ( is_search() ) {
+        if ( is_search() ) {
 
-                            echo esc_html__('Search result', 'exsit');
+            echo esc_html__( 'Search result', 'exsit' );
 
-                        } elseif ( function_exists('is_shop') && is_shop() ) {
+        } elseif ( function_exists( 'is_shop' ) && is_shop() && function_exists( 'wc_get_page_id' ) ) {
 
-                            echo '<span>' . esc_html( get_the_title( wc_get_page_id('shop') ) ) . '</span>';
+            echo '<span>' . esc_html( get_the_title( wc_get_page_id( 'shop' ) ) ) . '</span>';
 
-                        } elseif ( is_category() ) {
+        } elseif ( is_category() ) {
 
-                            echo '<span>Category : ' . esc_html( single_term_title('', false) ) . '</span>';
+            echo '<span>' . esc_html__( 'Category:', 'exsit' ) . ' ' . esc_html( single_term_title( '', false ) ) . '</span>';
 
-                        } elseif ( is_tag() ) {
+        } elseif ( is_tag() ) {
 
-                            echo '<span>Tag : ' . esc_html( single_term_title('', false) ) . '</span>';
+            echo '<span>' . esc_html__( 'Tag:', 'exsit' ) . ' ' . esc_html( single_term_title( '', false ) ) . '</span>';
 
-                        } elseif ( is_product_tag() ) {
+        } elseif ( function_exists( 'is_product_tag' ) && is_product_tag() ) {
 
-                            echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
+            echo '<span>' . esc_html( single_term_title( '', false ) ) . '</span>';
 
-                        } elseif ( is_product_category() ) {
+        } elseif ( function_exists( 'is_product_category' ) && is_product_category() ) {
 
-                            echo '<span>' . esc_html( single_term_title('', false) ) . '</span>';
+            echo '<span>' . esc_html( single_term_title( '', false ) ) . '</span>';
 
-                        } elseif ( is_archive() ) {
+        } elseif ( is_archive() ) {
 
-                            $title = get_the_archive_title();
-                            $title = preg_replace('/^\w+:\s/', '', $title);
+            $title = get_the_archive_title();
+            $title = preg_replace( '/^\w+:\s/', '', $title );
 
-                            echo '<span>' . esc_html( $title ) . '</span>';
+            echo '<span>' . esc_html( $title ) . '</span>';
 
-                        } elseif ( is_404() ) {
+        } elseif ( is_404() ) {
 
-                            echo esc_html__('Page Not Found', 'exsit');
+            echo esc_html__( 'Page Not Found', 'exsit' );
 
-                        } else {
+        } else {
 
-                            echo esc_html( get_the_title() );
-                        }
+            echo esc_html( get_the_title() );
+        }
 
-                        echo '</h1>';
+        echo '</h1>';
 
-                        // ===== BREADCRUMB =====
-                        echo '<p class="d-flex align-items-center justify-content-center gap-2 mt-3 mb-0">';
+        // ===== BREADCRUMB =====
+        echo '<nav class="d-flex align-items-center justify-content-center gap-2 mt-3 mb-0" aria-label="' . esc_attr__( 'Breadcrumb', 'exsit' ) . '">';
 
-                            // Home
-                            echo '<span class="text-gray-800 fw-500">';
-                                echo '<a href="' . esc_url( home_url('/') ) . '" class="text-gray-800">';
-                                    echo esc_html__('Home', 'exsit');
-                                echo '</a>';
-                            echo '</span>';
+        // Home
+        echo '<span class="text-gray-800 fw-500">';
+        echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="text-gray-800">';
+        echo esc_html__( 'Home', 'exsit' );
+        echo '</a>';
+        echo '</span>';
 
-                            // Arrow
-                            echo '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">';
-                                echo '<polyline points="9 18 15 12 9 6"></polyline>';
-                            echo '</svg>';
+        // Arrow
+        echo '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">';
+        echo '<polyline points="9 18 15 12 9 6"></polyline>';
+        echo '</svg>';
 
-                            // Second item
-                            echo '<span class="text-gray-800 fw-500">';
+        // Current page
+        echo '<span class="text-gray-800 fw-500">';
 
-                            if ( is_search() ) {
+        if ( is_search() ) {
 
-                                echo esc_html( get_search_query() );
+            echo esc_html( get_search_query() );
 
-                            } elseif ( function_exists('is_shop') && is_shop() ) {
+        } elseif ( function_exists( 'is_shop' ) && is_shop() && function_exists( 'wc_get_page_id' ) ) {
 
-                                echo esc_html( get_the_title( wc_get_page_id('shop') ) );
+            echo esc_html( get_the_title( wc_get_page_id( 'shop' ) ) );
 
-                            } elseif ( is_category() || is_tag() ) {
+        } elseif ( is_category() ) {
 
-                                echo esc_html( single_term_title('', false) );
+            echo esc_html( single_term_title( '', false ) );
 
-                            } elseif ( is_product_category() || is_product_tag() ) {
+        } elseif ( is_tag() ) {
 
-                                echo esc_html( single_term_title('', false) );
+            echo esc_html( single_term_title( '', false ) );
 
-                            } elseif ( is_archive() ) {
+        } elseif ( function_exists( 'is_product_category' ) && is_product_category() ) {
 
-                                $title = get_the_archive_title();
-                                $title = preg_replace('/^\w+:\s/', '', $title);
+            echo esc_html( single_term_title( '', false ) );
 
-                                echo esc_html( $title );
+        } elseif ( function_exists( 'is_product_tag' ) && is_product_tag() ) {
 
-                            } elseif ( is_404() ) {
+            echo esc_html( single_term_title( '', false ) );
 
-                                echo esc_html__('404', 'exsit');
+        } elseif ( is_archive() ) {
 
-                            } else {
+            $title = get_the_archive_title();
+            $title = preg_replace( '/^\w+:\s/', '', $title );
 
-                                echo esc_html( get_the_title() );
-                            }
+            echo esc_html( $title );
 
-                            echo '</span>';
+        } elseif ( is_404() ) {
 
-                        echo '</p>';
+            echo esc_html__( '404', 'exsit' );
 
-                    echo '</div>';
-                echo '</div>';
-            echo '</div>';  
+        } else {
+
+            echo esc_html( get_the_title() );
+        }
+
+        echo '</span>';
+
+        echo '</nav>';
+
         echo '</div>';
-        echo '<!-- END PAGETITLE WRAPPER  -->';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '<!-- END PAGETITLE WRAPPER -->';
     }
 }
 
