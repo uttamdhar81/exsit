@@ -75,7 +75,7 @@ if ( ! function_exists( 'exsit_theme_logo' ) ) {
 if ( ! function_exists( 'exsit_global_header' ) ) {
     function exsit_global_header() {
         echo '<!-- HEADER WRAPPER  -->';
-        echo '<header class="header-wrapper w-100 z-10 py-lg-0 py-1 border-bottom border-gray-200 position-relative">';
+        echo '<header class="header-wrapper w-100 z-10 py-lg-0 py-1 border-bottom border-gray-200 position-absolute">';
             echo '<nav class="navbar navbar-one navbar-expand-lg border-0 py-0">';
                 echo '<div class="container">';
                     echo '<div class="header-wrap d-flex align-items-center justify-content-between w-100">';

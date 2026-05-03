@@ -95,7 +95,7 @@ if (!function_exists('exsit_blog_start_wrap_cb')) {
     function exsit_blog_start_wrap_cb()
     {
 
-        echo '<section class="blog-wrapper pb-100 pt-100">';
+        echo '<section class="blog-wrapper">';
         echo '<div class="container">';
 
         $exsit_gutter_class = '';

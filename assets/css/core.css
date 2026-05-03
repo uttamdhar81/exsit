@@ -562,6 +562,9 @@ blockquote p { font-size: 1.30rem; line-height: 1.4;  margin: 0; color: white;}
 }
 
 /* SINGLE BLOG STYLE */
+.blog-wrapper {
+    padding: 175px 0 90px;
+}
 .error-section,
 .single-blog {
     padding: 175px 0 90px;
@@ -2186,7 +2189,7 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
 }
 
 @media screen and (max-width: 990px) {
-    
+    .blog-wrapper,
     .error-section,
     .single-blog {
         padding: 140px 0 60px;
