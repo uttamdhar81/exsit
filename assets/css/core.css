@@ -2172,6 +2172,9 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
         padding-top: 120px;
         padding-bottom: 90px;
     }
+    .blog-wrapper {
+        padding: 90px 0 50px;
+    }
 
 }
 @media screen and (max-width: 991px) {
@@ -2189,7 +2192,7 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
 }
 
 @media screen and (max-width: 990px) {
-    .blog-wrapper,
+    
     .error-section,
     .single-blog {
         padding: 140px 0 60px;
@@ -2207,6 +2210,9 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
     .woocommerce .woocommerce-ordering, .woocommerce-page .woocommerce-ordering select,
     .woocommerce .woocommerce-ordering, .woocommerce-page .woocommerce-ordering {
         width: 100%;
+    }
+    .blog-wrapper {
+        padding: 90px 0 40px;
     }
 }
 

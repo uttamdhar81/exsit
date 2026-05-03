@@ -40,6 +40,10 @@ add_action( 'exsit_blog_col_end_wrap', 'exsit_blog_col_end_wrap_cb', 10 );
 add_action( 'exsit_blog_sidebar', 'exsit_blog_sidebar_cb', 10 );
 add_action( 'exsit_blog_end_wrap', 'exsit_blog_end_wrap_cb', 10 );
 
+//Blog archive components
+add_action( 'exsit_blog_archive_start_wrap', 'exsit_blog_archive_start_wrap_cb', 10 );
+add_action( 'exsit_blog_archive_end_wrap', 'exsit_blog_archive_end_wrap_cb', 10 );
+
 /**
  * Blog single (details) layout
  */

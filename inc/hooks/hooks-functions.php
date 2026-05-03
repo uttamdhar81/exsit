@@ -172,6 +172,8 @@ if (!function_exists('exsit_blog_col_end_wrap_cb')) {
     }
 }
 
+
+
 // Blog Sidebar
 if (!function_exists('exsit_blog_sidebar_cb')) {
     function exsit_blog_sidebar_cb()
@@ -270,6 +272,33 @@ if (!function_exists('exsit_blog_pagination_cb')) {
         get_template_part('template-parts/pagination');
     }
 }
+
+
+if (!function_exists('exsit_blog_archive_start_wrap_cb')) {
+    function exsit_blog_archive_start_wrap_cb()
+    {
+        echo '<section class="archive-wrapper">';
+        echo '<div class="container">';
+
+        $exsit_gutter_class = '';
+
+        if (is_active_sidebar('exsit-blog-sidebar')) {
+            $exsit_gutter_class = 'gx-30';
+        }
+
+        echo '<div class="row ' . esc_attr($exsit_gutter_class) . '">';
+    }
+}
+
+if (!function_exists('exsit_blog_archive_end_wrap_cb')) {
+    function exsit_blog_archive_end_wrap_cb()
+    {
+        echo '</div>';   // .row
+        echo '</div>';   // .container
+        echo '</section>';
+    }
+}
+
 
 if (!function_exists('exsit_blog_post_author_cb')) {
     function exsit_blog_post_author_cb()

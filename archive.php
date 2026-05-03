@@ -27,7 +27,7 @@ do_action( 'exsit_main_wrapper_start' );
  *
  * @Hooked exsit_blog_start_wrap_cb 10
  */
-do_action( 'exsit_blog_start_wrap' );
+do_action( 'exsit_blog_archive_start_wrap' );
 
 
 
@@ -86,7 +86,7 @@ do_action( 'exsit_page_sidebar' );
  *
  * @Hooked exsit_blog_end_wrap_cb 10
  */
-do_action( 'exsit_blog_end_wrap' );
+do_action( 'exsit_blog_archive_end_wrap' );
 
 
 
