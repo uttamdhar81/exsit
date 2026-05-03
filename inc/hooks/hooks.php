@@ -44,6 +44,8 @@ add_action( 'exsit_blog_end_wrap', 'exsit_blog_end_wrap_cb', 10 );
 add_action( 'exsit_blog_archive_start_wrap', 'exsit_blog_archive_start_wrap_cb', 10 );
 add_action( 'exsit_blog_archive_end_wrap', 'exsit_blog_archive_end_wrap_cb', 10 );
 
+
+
 /**
  * Blog single (details) layout
  */
