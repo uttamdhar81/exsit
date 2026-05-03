@@ -260,9 +260,20 @@ function exsit_excerpt_more() {
 }
 add_filter('excerpt_more', 'exsit_excerpt_more');
 
+
+
 /**
  * Pagination (WordPress native)
  */
+
+function exsit_posts_link_attributes() {
+    return 'class="pagi-btn"';
+}
+
+add_filter( 'next_posts_link_attributes', 'exsit_posts_link_attributes' );
+add_filter( 'previous_posts_link_attributes', 'exsit_posts_link_attributes' );
+
+
 if ( ! function_exists( 'exsit_pagination' ) ) {
     function exsit_pagination() {
         $links = paginate_links( array(
