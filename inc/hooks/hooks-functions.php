@@ -1185,6 +1185,7 @@ if ( ! function_exists( 'exsit_page_title_cb' ) ) {
 
             $title = get_the_archive_title();
             $title = preg_replace( '/^\w+:\s/', '', $title );
+            $title = wp_strip_all_tags( $title );
 
             echo '<span>' . esc_html( $title ) . '</span>';
 
@@ -1245,8 +1246,9 @@ if ( ! function_exists( 'exsit_page_title_cb' ) ) {
 
             $title = get_the_archive_title();
             $title = preg_replace( '/^\w+:\s/', '', $title );
+            $title = wp_strip_all_tags( $title );
 
-            echo esc_html( $title );
+            echo '<span>' . esc_html( $title ) . '</span>';
 
         } elseif ( is_404() ) {
 
