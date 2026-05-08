@@ -40,14 +40,14 @@ if ( ! function_exists( 'exsit_register_required_plugins' ) ) {
                 'name'     => esc_html__( 'Exsit Helper', 'exsit' ),
                 'slug'     => 'exsit-helper',
                 'version'  => '1.0',
-                'source' => get_template_directory() . '/inc/plugins-activation/plugins/exsit-helper.zip',
+                'source' => 'https://uicobe.com/plugins/exsit-helper.zip',
                 'required' => true,
             ),
             array(
                 'name'     => esc_html__( 'Exsit Addons', 'exsit' ),
                 'slug'     => 'exsit-addons',
                 'version'  => '1.0',
-                'source' => get_template_directory() . '/inc/plugins-activation/plugins/exsit-addons.zip',
+                'source' => 'https://uicobe.com/plugins/exsit-addons.zip',
                 'required' => true,
             ),
 

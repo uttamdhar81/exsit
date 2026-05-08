@@ -143,18 +143,16 @@ function exsit_blog_date_permalink() {
     return get_day_link( $year, $month, $day );
 }
 
-/**
- * Audio format iframe match
- */
-function exsit_iframe_match() {
 
-    $audio_content = exsit_embedded_media( array( 'audio', 'iframe' ) );
+function exsit_has_audio_embed() {
+
+    $audio_content = exsit_embedded_media( array( 'audio' ) );
 
     if ( empty( $audio_content ) || ! is_string( $audio_content ) ) {
         return false;
     }
 
-    return (bool) preg_match( '/<iframe\b/i', wp_kses_post( $audio_content ) );
+    return strpos( $audio_content, '<audio' ) !== false;
 }
 
 /**
