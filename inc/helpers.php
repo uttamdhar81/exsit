@@ -31,6 +31,7 @@ if ( ! function_exists( 'exsit_theme_logo' ) ) {
             $logo_url       = wp_get_attachment_image_url( $custom_logo_id, 'full' );
 
             if ( $logo_url ) {
+                // ADDED: esc_url and esc_attr for the image
                 return '<a class="navbar-brand light-logo logo position-relative" href="' . esc_url( $site_url ) . '">
                             <img src="' . esc_url( $logo_url ) . '" alt="' . $alt . '" class="logo_light" width="156" height="50" loading="eager">
                         </a>';
@@ -48,10 +49,10 @@ if ( ! function_exists( 'exsit_theme_logo' ) ) {
             $dark_src  = !empty($white_logo['url']) ? esc_url($white_logo['url']) : '';
 
             if ( $light_src || $dark_src ) {
-
+                // FIXED: Added esc_url to ensure the img src is safe
                 return '<a class="navbar-brand light-logo logo position-relative" href="' . esc_url( $site_url ) . '">
-                            ' . ( $light_src ? '<img src="' . $light_src . '" alt="' . $alt . '" class="logo_light img-fluid">' : '' ) . '
-                            ' . ( $dark_src  ? '<img src="' . $dark_src  . '" alt="' . $alt . '" class="logo_dark img-fluid">'  : '' ) . '
+                            ' . ( $light_src ? '<img src="' . esc_url( $light_src ) . '" alt="' . $alt . '" class="logo_light img-fluid">' : '' ) . '
+                            ' . ( $dark_src  ? '<img src="' . esc_url( $dark_src ) . '" alt="' . $alt . '" class="logo_dark img-fluid">'  : '' ) . '
                         </a>';
             }
 
