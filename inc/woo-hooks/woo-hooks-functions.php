@@ -75,7 +75,7 @@ function exsit_new_loop_shop_per_page( $product_count ) {
 if( !function_exists('exsit_shop_col_start_cb') ) {
     function exsit_shop_col_start_cb( ) {
         if( class_exists('CSF') ) {
-            if( class_exists('woocommerce') && is_shop() ) {
+            if( class_exists( 'WooCommerce' ) && is_shop() ) {
                 $wctab = exsit_opt('exsit_wc_settings');
                 $exsit_woo_shoppage_sidebar = is_array($wctab) && isset($wctab['exsit_woo_shoppage_sidebar']) ? $wctab['exsit_woo_shoppage_sidebar'] : '';
 
@@ -90,7 +90,7 @@ if( !function_exists('exsit_shop_col_start_cb') ) {
                 echo '<div class="col-lg-12">';
             }
         } else {
-            if( class_exists('woocommerce') && is_shop() ) {
+            if( class_exists( 'WooCommerce' ) && is_shop() ) {
                 if( is_active_sidebar('exsit-woo-sidebar') ) {
                     echo '<div class="col-lg-8">';
                 } else {
@@ -110,7 +110,7 @@ if( ! function_exists('exsit_woocommerce_get_sidebar') ) {
             $wctab = exsit_opt('exsit_wc_settings');
             $exsit_woo_shoppage_sidebar = is_array( $wctab ) && isset( $wctab['exsit_woo_shoppage_sidebar'] ) ? $wctab['exsit_woo_shoppage_sidebar'] : '1'; 
         } else {
-            if( is_active_sidebar('exsit-woo-sidebar') ) {
+            if( class_exists( 'WooCommerce' ) && is_active_sidebar('exsit-woo-sidebar') ) {
                 $exsit_woo_shoppage_sidebar = '2';
             } else {
                 $exsit_woo_shoppage_sidebar = '1';
@@ -132,20 +132,26 @@ function exsit_shop_col_end_cb( ) {
 }
 
 // woocommerce filter wrapper hook function
-if( ! function_exists('exsit_woocommerce_filter_wrapper') ) {
+if ( ! function_exists( 'exsit_woocommerce_filter_wrapper' ) ) {
+
     function exsit_woocommerce_filter_wrapper() {
 
         echo '<div class="sort-bar pb-3 border-bottom border-gray-200 mb-3">';
             echo '<div class="row justify-content-between align-items-center gy-3">';
 
                 echo '<div class="col-md-6 col-12">';
-                    echo '<p class="woocommerce-result-count">'.woocommerce_result_count().'</p>';
+
+                    // WooCommerce Result Count
+                    woocommerce_result_count();
+
                 echo '</div>';
 
                 echo '<div class="col-md-6 col-12">';
                     echo '<div class="col-sm-auto">';
 
-                       echo woocommerce_catalog_ordering();
+                        // WooCommerce Ordering Dropdown
+                        woocommerce_catalog_ordering();
+
                     echo '</div>';
                 echo '</div>';
 
@@ -153,37 +159,53 @@ if( ! function_exists('exsit_woocommerce_filter_wrapper') ) {
         echo '</div>';
     }
 }
-
 // exsit woocommerce pagination hook function
-if( ! function_exists('exsit_woocommerce_pagination') ) {
-    function exsit_woocommerce_pagination( ) {
-        if( ! empty( exsit_pagination() ) ) {
-            echo '<div class="row">';
-                echo '<div class="col-12">';
-                    echo '<div class="exsit-pagination">';
-                        add_filter('next_posts_link_attributes', 'woo_posts_link_attributes');
-                        add_filter('previous_posts_link_attributes', 'woo_posts_link_attributes');
-                        function woo_posts_link_attributes(){
-                            return 'class="pagi-btn"';
-                        };
-                        $prev 	= '<i class="ri-arrow-left-s-line"></i>';
-                        $next 	= '<i class="ri-arrow-right-s-line"></i>';
-                        // previous
-                        if( get_previous_posts_link() ){
-                            previous_posts_link( $prev );
-                        }
-                        echo '<ul>';
-                            echo exsit_pagination();
-                        echo '</ul>';
-                        // next
-                        if( get_next_posts_link() ){
-                            next_posts_link( $next );
-                        }
-                        
-                    echo '</div>';
+if ( ! function_exists( 'exsit_woo_posts_link_attributes' ) ) {
+
+    function exsit_woo_posts_link_attributes() {
+        return 'class="pagi-btn"';
+    }
+}
+
+add_filter( 'next_posts_link_attributes', 'exsit_woo_posts_link_attributes' );
+add_filter( 'previous_posts_link_attributes', 'exsit_woo_posts_link_attributes' );
+
+
+if ( ! function_exists( 'exsit_woocommerce_pagination' ) ) {
+
+    function exsit_woocommerce_pagination() {
+
+        $pagination = exsit_pagination();
+
+        if ( empty( $pagination ) ) {
+            return;
+        }
+
+        $prev = '<i class="ri-arrow-left-s-line"></i>';
+        $next = '<i class="ri-arrow-right-s-line"></i>';
+
+        echo '<div class="row">';
+            echo '<div class="col-12">';
+                echo '<div class="exsit-pagination">';
+
+                    // Previous Posts
+                    if ( get_previous_posts_link() ) {
+                        previous_posts_link( wp_kses_post( $prev ) );
+                    }
+
+                    // Pagination
+                    echo '<ul>';
+                        echo wp_kses_post( $pagination );
+                    echo '</ul>';
+
+                    // Next Posts
+                    if ( get_next_posts_link() ) {
+                        next_posts_link( wp_kses_post( $next ) );
+                    }
+
                 echo '</div>';
             echo '</div>';
-        }
+        echo '</div>';
     }
 }
 
@@ -396,7 +418,7 @@ if( ! function_exists('exsit_loop_product_summary') ) {
             echo '<h2 class="product-title">
                 <a class="text-inherit" href="'.esc_url( get_permalink() ).'">'.esc_html( get_the_title() ).'</a>
             </h2>';
-            echo woocommerce_template_loop_rating();
+            woocommerce_template_loop_rating();
 
             // Product Category
             echo '<div class="product-category">';
@@ -409,7 +431,7 @@ if( ! function_exists('exsit_loop_product_summary') ) {
             echo '</div>';
             // Product Price
             echo '<div class="product-price">';
-                echo woocommerce_template_loop_price();
+                woocommerce_template_loop_price();
             echo '</div>';
         echo '</div>';
     }
@@ -483,7 +505,7 @@ if( !function_exists('exsit_woocommerce_single_product_title') ) {
             echo '<span class="rating-number fw-500">' . esc_html( $average_rating ) . '/5</span>';
 
         } else {
-            echo '<span>No reviews yet</span>';
+            echo '<span>' . esc_html__( 'No reviews yet', 'exsit' ) . '</span>';
         }
 
         echo '</div>';
@@ -575,24 +597,66 @@ if( !function_exists('exsit_woocommerce_single_add_to_cart_button') ) {
 }
 
 // single product meta hook function
-if( !function_exists('exsit_woocommerce_single_meta') ) {
-    function exsit_woocommerce_single_meta( ) {
+if ( ! function_exists( 'exsit_woocommerce_single_meta' ) ) {
+
+    function exsit_woocommerce_single_meta() {
+
         global $product;
+
+        if ( ! $product ) {
+            return;
+        }
+
         echo '<div class="product_meta">';
-            echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">'.esc_html__( 'Quick info', 'exsit' ).'</p>';
-            if( ! empty( $product->get_sku() ) ){
-                echo '<span class="sku_wrapper">'.esc_html__( 'SKU: ', 'exsit' ).'<span class="sku">' .$product->get_sku().'</span></span>';
+
+            // Title
+            echo '<p class="text-gray-900 fw-500 mb-2 text-uppercase fs-14">';
+                echo esc_html__( 'Quick info', 'exsit' );
+            echo '</p>';
+
+            // SKU
+            if ( $product->get_sku() ) {
+
+                echo '<span class="sku_wrapper">';
+
+                    echo esc_html__( 'SKU: ', 'exsit' );
+
+                    echo '<span class="sku">';
+                        echo esc_html( $product->get_sku() );
+                    echo '</span>';
+
+                echo '</span>';
             }
-            echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="posted_in">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'exsit' ) . ' ', '</span>' );
-            // Add the "Tags" section here
+
+            // Categories
+            echo wc_get_product_category_list(
+                $product->get_id(),
+                ', ',
+                '<span class="posted_in">' .
+                    esc_html(
+                        _n(
+                            'Category:',
+                            'Categories:',
+                            count( $product->get_category_ids() ),
+                            'exsit'
+                        )
+                    ) . ' ',
+                '</span>'
+            );
+
+            // Tags
             $product_tags = get_the_terms( $product->get_id(), 'product_tag' );
             if ( $product_tags && ! is_wp_error( $product_tags ) ) {
-                echo '<span>' . esc_html__( 'Tags:', 'exsit' ) . ' ';
-                $tag_links = array();
-                foreach ( $product_tags as $tag ) {
-                    $tag_links[] = '<a href="' . get_term_link( $tag ) . '" rel="tag">' . esc_html( $tag->name ) . '</a>';
-                }
-                echo implode( ', ', $tag_links );
+                echo '<span class="tagged_as">';
+                    echo esc_html__( 'Tags:', 'exsit' ) . ' ';
+                    $tag_links = array();
+                    foreach ( $product_tags as $tag ) {
+                        $tag_links[] =
+                            '<a href="' . esc_url( get_term_link( $tag ) ) . '" rel="tag">' .
+                                esc_html( $tag->name ) .
+                            '</a>';
+                    }
+                    echo wp_kses_post( implode( ', ', $tag_links ) );
                 echo '</span>';
             }
         echo '</div>';
@@ -623,11 +687,7 @@ if( !function_exists('exsit_woocommerce_single_payment_options') ) {
     }
 }
 
-if( !function_exists('exsit_woocommerce_cross_sell_display') ) {
-    function exsit_woocommerce_cross_sell_display( ){
-        woocommerce_cross_sell_display();
-    }
-}
+
 
 if( !function_exists('exsit_login_form_wrapper_start') ) {
     function exsit_login_form_wrapper_start() {

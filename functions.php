@@ -26,14 +26,22 @@ require_once EXSIT_DIR_PATH_INC . 'theme-setup.php';
 //essential scripts
 require_once EXSIT_DIR_PATH_INC . 'essential-scripts.php';
 
+/**
+ * Load WooCommerce Files
+ */
+function exsit_load_woocommerce_files() {
 
-if( class_exists( 'WooCommerce' ) ){
-    // Woo Hooks
-    require_once EXSIT_DIR_PATH_INC . 'woo-hooks/woo-hooks.php';
+	if ( class_exists( 'WooCommerce' ) ) {
 
-    // Woo Hooks Functions
-    require_once EXSIT_DIR_PATH_INC . 'woo-hooks/woo-hooks-functions.php';
+		// WooCommerce Hooks.
+		require_once EXSIT_DIR_PATH_INC . 'woo-hooks/woo-hooks.php';
+
+		// WooCommerce Hook Functions.
+		require_once EXSIT_DIR_PATH_INC . 'woo-hooks/woo-hooks-functions.php';
+	}
 }
+
+add_action( 'after_setup_theme', 'exsit_load_woocommerce_files' );
 
 // plugin activation
 require_once EXSIT_DIR_PATH_INC . 'plugins-activation/exsit-active-plugins.php';
