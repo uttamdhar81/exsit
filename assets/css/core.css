@@ -2220,6 +2220,16 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
     .blog-wrapper {
         padding: 90px 0 40px;
     }
+    .woocommerce ul.order_details {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .woocommerce ul.order_details li {
+        border: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 }
 
 
