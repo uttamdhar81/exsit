@@ -1001,7 +1001,7 @@ if (!function_exists('exsit_page_start_wrap_cb')) {
         echo '<!-- MAIN WRAPPER  -->';
         echo '<section class="page-section pb-100">';
         echo '<div class="container">';
-        echo '<div class="row g-5">';
+        echo '<div class="row">';
     }
 }
 
