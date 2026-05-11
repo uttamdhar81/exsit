@@ -2233,3 +2233,10 @@ table.wc-block-cart-items .wc-block-cart-items__row .wc-block-cart-item__wrap>* 
 }
 
 
+@media screen and (max-width: 480px) {
+    .btn-xs-w100 .elementor-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
